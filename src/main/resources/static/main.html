@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Калькулятор</title>
@@ -8,85 +9,179 @@
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
-<body>
 
-</body>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<body>
 <div id="app">
-    <v-card class="overflow-hidden">
-        <v-app-bar
-                absolute
-                color="#6A76AB"
+    <div>
+        <v-toolbar
                 dark
-                shrink-on-scroll
                 prominent
-                src="https://picsum.photos/1920/1080?random"
-                fade-img-on-scroll
-                scroll-target="#scrolling-techniques-3"
+                src="http://yesofcorsa.com/wp-content/uploads/2017/01/4K-Lights-Best-Wallpaper-1.jpg"
         >
-            <template v-slot:img="{ props }">
-                <v-img
-                        v-bind="props"
-                        gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-                ></v-img>
-            </template>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer" ></v-app-bar-nav-icon>
 
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-            <v-app-bar-title style="width: 100%; height: 10%" >
-                <div class = "v-app-bar-title__content" style="width: 100%; height: 10%" > Title </div>
-            </v-app-bar-title>
+            <v-toolbar-title>Calculator</v-toolbar-title>
 
             <v-spacer></v-spacer>
 
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
+            <v-btn icon @click="logout()" th:href="@{/logout}">
+                <v-icon>mdi-export</v-icon>
             </v-btn>
+        </v-toolbar>
+    </div>
 
-            <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-            </v-btn>
 
-            <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
 
-            <template v-slot:extension>
-                <v-tabs align-with-title>
-                    <v-tab>Tab 1</v-tab>
-                    <v-tab>Tab 2</v-tab>
-                    <v-tab>Tab 3</v-tab>
-                </v-tabs>
-            </template>
-        </v-app-bar>
-        <v-sheet
-                id="scrolling-techniques-3"
-                class="overflow-y-auto"
-                max-height="600"
+    <v-sheet
+            height=813
+            class="overflow-hidden"
+            style="position: relative;"
+
+    >
+
+        <v-form>
+            <v-container>
+                <v-row>
+                    <v-col
+                            cols="12"
+                            sm="4">
+                        <v-text-field
+                                label="Solo1"
+                                placeholder="Placeholder1"
+                                solo
+                        ></v-text-field>
+
+                        <v-text-field
+                                label="Solo2"
+                                placeholder="Placeholder2"
+                                solo
+                        ></v-text-field>
+                    </v-col>
+                    <v-col
+                            cols="12"
+                            sm="4">
+                        <v-text-field
+                                label="Solo3"
+                                placeholder="Placeholder3"
+                                solo
+                        ></v-text-field>
+
+                        <v-text-field
+                                label="Solo4"
+                                placeholder="Placeholder4"
+                                solo
+                        ></v-text-field>
+
+                    </v-col>
+                    <v-col
+                            cols="12"
+                            sm="4">
+                        <v-text-field
+                                label="Solo5"
+                                placeholder="Placeholder5"
+                                solo
+                        ></v-text-field>
+
+                        <v-text-field
+                                label="Solo6"
+                                placeholder="Placeholder6"
+                                solo
+                        ></v-text-field>
+
+
+                    </v-col>
+
+                </v-row>
+            </v-container>
+
+
+        </v-form>
+
+
+        <v-btn
+                color="accent"
+
+                elevation="11"
+                outlined
+                raised
+                rounded
+                text
+                large
+
+        >Calculate</v-btn>
+
+
+        <v-navigation-drawer
+                v-model="drawer"
+                v-if="drawer"
+                absolute
+                temporary
         >
-            <v-container style="height: 100%;"></v-container>
-        </v-sheet>
-    </v-card>
+
+            <v-list-item>
+                <v-list-item-avatar>
+                    <v-img src="https://media-exp1.licdn.com/dms/image/C4D03AQEoyyoiCuZw7Q/profile-displayphoto-shrink_200_200/0/1652669880083?e=1660176000&v=beta&t=woqbxhGjofcC-8-SaJBO0VQZ9oyUSGG2rJJnPUNGXHw"></v-img>
+                </v-list-item-avatar>
+
+                <v-list-item-content>
+                    <v-list-item-title> Suleyev Nurassyl </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-divider></v-divider>
+
+            <v-list dense>
+                <v-list-item
+                        v-for="item in items"
+                        :key="item.title"
+                        link
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
+    </v-sheet>
+
+
 </div>
+</body>
+
+
+
+
 <script>
+
     new Vue({
         el: '#app',
         vuetify: new Vuetify(),
         data () {
-                return {
-                    drawer: true,
-                    items: [
-                        { title: 'Home', icon: 'mdi-home-city' },
-                        { title: 'My Account', icon: 'mdi-account' },
-                        { title: 'Users', icon: 'mdi-account-group-outline' },
-                    ],
-                    mini: true,
-                }
-            },
+            return {
+                drawer: null,
+                items: [
+                    { title: 'Home', icon: 'mdi-view-dashboard' },
+                    { title: 'About', icon: 'mdi-forum' },
+                ],
+
+            }
+        },
+        methods: {
+            logout() {
+                console.log("logging out")
+            }
+        }
     })
+
 
 
 </script>
