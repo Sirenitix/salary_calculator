@@ -72,6 +72,7 @@
                                 label="Категория"
                                 placeholder="Категория"
                                 solo
+                                v-model="category"
                         ></v-text-field>
 
                         <v-text-field
@@ -80,11 +81,18 @@
                                 solo
                         ></v-text-field>
 
+                        <v-container bg grid-list-md text-center>
+                            <v-layout row wrap align-center>
+                                <v-flex>
                         <v-checkbox
-                                v-model="checkbox"
+                                v-model="checkbox" dense
                                 :label="`Работа в сельской местности`"
-
                         ></v-checkbox>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+
+
 
                         <v-container bg fill-height grid-list-md text-center>
                             <v-layout row wrap align-center>
@@ -99,7 +107,10 @@
                                             large
                                             inline
                                             block
+                                            @click="calculate"
                                     >Расчитать</v-btn>
+                                    <br>
+                                    <p style="text-align:center" v-if="result != ''" >{{result}}</p>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -254,6 +265,8 @@
                 menu: false,
                 modal: false,
                 checkbox: false,
+                category: '',
+                result: ''
 
             }
         },
@@ -262,6 +275,18 @@
             logout() {
                 console.log("logging out")
             },
+            calculate() {
+                // POST request using axios with error handling
+                const itemsToCalculate = { category: this.category};
+                // console.log(this.category)
+                axios.post("http://localhost:8080/calculate", itemsToCalculate)
+                    .then(response =>  this.result = response.data.category)
+                    .catch(error => {
+                        this.errorMessage = error.message;
+                        console.error("There was an error!", error);
+                    });
+                // console.log("result is " + this.result)
+            }
 
         },
 
