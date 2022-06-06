@@ -19,4 +19,8 @@ public class SalaryController {
         return "main.html";
     }
 
+    @GetMapping("/about")
+    public String about(){
+        return "about.html";
+    }
 }

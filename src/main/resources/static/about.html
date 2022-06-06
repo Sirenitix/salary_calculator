@@ -44,23 +44,13 @@
 
     >
 
+        <br>
         <v-form>
             <v-container>
                 <v-row>
                     <v-col
                             cols="12"
                             sm="4">
-                        <v-text-field
-                                label="Должность"
-                                placeholder="Должность"
-                                solo
-                        ></v-text-field>
-
-                        <v-text-field
-                                label="Образование"
-                                placeholder="Образование"
-                                solo
-                        ></v-text-field>
 
 
 
@@ -68,96 +58,33 @@
                     <v-col
                             cols="12"
                             sm="4">
-                        <v-text-field
-                                label="Категория"
-                                placeholder="Категория"
-                                solo
-                        ></v-text-field>
 
-                        <v-text-field
-                                label="Стаж"
-                                placeholder="Стаж"
-                                solo
-                        ></v-text-field>
 
-                        <v-checkbox
-                                v-model="checkbox"
-                                :label="`Работа в сельской местности`"
-
-                        ></v-checkbox>
-
-                        <v-container bg fill-height grid-list-md text-center>
-                            <v-layout row wrap align-center>
-                                <v-flex>
-                                    <v-btn
-                                            color="accent"
-                                            elevation="11"
-                                            outlined
-                                            raised
-                                            rounded
-                                            text
-                                            large
-                                            inline
-                                            block
-                                    >Расчитать</v-btn>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
+                                <v-hover
+                                        v-slot="{ hover }"
+                                        disabled
+                                >
+                                    <v-card
+                                            :elevation="hover ? 12 : 2"
+                                            class="mx-auto"
+                                            height="350"
+                                            max-width="350"
+                                    >
+                                        <v-card-text class="my-6 text-center text-h1">
+                                            Служба технической поддержки
+                                            Вы можете обратиться по телефону 8-777-574-25-40
+                                            Или написать нам на адрес suleevn@gmail.com
+                                        </v-card-text>
+                                    </v-card>
+                                </v-hover>
 
                     </v-col>
                     <v-col
                             cols="12"
                             sm="4">
 
-<!--      Date picker                  -->
 
-                        <v-dialog
-                                ref="dialog"
-                                v-model="modal"
-                                :return-value.sync="date"
-                                persistent
-                                width="290px"
-                        >
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-text-field
-                                        v-model="date"
-                                        label="За период"
-                                        prepend-icon="mdi-calendar"
-                                        readonly
-                                        v-bind="attrs"
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker
-                                    v-model="date"
-                                    type="month"
-                                    scrollable
-                                    dark
-                                    locale="ru"
-                            >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        text
-                                        dark
-                                        @click="modal = false"
-                                >
-                                    Cancel
-                                </v-btn>
-                                <v-btn
-                                        text
-                                        dark
-                                        @click="$refs.dialog.save(date)"
-                                >
-                                    OK
-                                </v-btn>
-                            </v-date-picker>
-                        </v-dialog>
 
-                        <v-text-field
-                                label="Нагрузка"
-                                placeholder="Нагрузка"
-                                solo
-                        ></v-text-field>
 
 
                     </v-col>
@@ -165,18 +92,8 @@
                 </v-row>
             </v-container>
 
-            <v-container
-                    class="px-0"
-                    fluid
-            >
-
-            </v-container>
-            <!--        ${checkbox.toString()}                -->
 
         </v-form>
-
-
-
 
 
         <v-navigation-drawer
@@ -200,7 +117,7 @@
 
             <v-list dense>
                 <v-list-item th:href="@{/}"
-                        link
+                             link
                 >
                     <v-list-item-icon>
                         <v-icon >mdi-view-dashboard</v-icon>
