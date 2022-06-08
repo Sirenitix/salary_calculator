@@ -1,29 +1,148 @@
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Login</title>
+  <meta charset="UTF-8">
+  <title>Калькулятор</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
-<body class="text-center">
-<div layout:fragment="content">
-  <form class="form-signin" th:action="@{/login}" method="post">
-    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <div th:if="${param.error}">
-      Invalid email and password.
-    </div>
-    <div th:if="${param.logout}">
-      You have been logged out.
-    </div>
-    <label for="inputLogin" class="sr-only">Email address</label>
-    <input type="text" name="login" id="inputLogin" class="form-control" placeholder="Username" required="" />
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  </form>
-  <form class="form-signin" th:action="@{/signup}" method="get">
-    <button class="btn btn-md btn-success btn-block" type="Submit">Signup Here</button>
-  </form>
+
+
+<script src="https://unpkg.com/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+<body>
+<div id="login" data-app >
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <v-form>
+    <form th:action="@{/login}" method="post">
+    <v-container >
+      <v-row>
+        <v-col
+                cols="12"
+                sm="4">
+
+        </v-col>
+
+        <v-col
+                cols="12"
+                sm="4">
+
+
+          <div>Login</div>
+          <v-text-field
+                  v-model="username"
+                  placeholder="Login"
+                  outlined
+                  clearable
+                  th:name="login"
+          ></v-text-field>
+          <div>Password</div>
+          <v-text-field
+                  v-model="password"
+                  placeholder="Password"
+                  outlined
+                  clearable
+                  th:name="password"
+          ></v-text-field>
+          <v-container bg fill-height grid-list-md text-center>
+            <v-layout row wrap align-center>
+              <v-flex>
+                <v-btn
+
+                        color="accent"
+                        elevation="11"
+                        outlined
+                        raised
+                        rounded
+                        text
+                        large
+                        inline
+                        block
+                        type="submit"
+                >Log in</v-btn>
+                <br>
+                  <v-btn
+
+                          color="accent"
+                          elevation="11"
+                          outlined
+                          raised
+                          rounded
+                          text
+                          large
+                          inline
+                          block
+                          th:href="@{/signup}"
+                  >Registration</v-btn>
+                <br>
+                <v-btn
+
+                        color="accent"
+                        elevation="11"
+                        outlined
+                        raised
+                        rounded
+                        text
+                        large
+                        inline
+                        block
+                        th:href="@{/}"
+                ><v-icon>mdi-calculator</v-icon> </v-btn>
+                <br>
+                <div th:if="${param.error}" style="text-align: center">
+                  Invalid email or password.
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-container>
+
+
+<!--          Registration          -->
+
+        </v-col>
+
+        <v-col
+                cols="12"
+                sm="4">
+
+        </v-col>
+
+
+
+      </v-row>
+    </v-container>
+    </form>
+  </v-form>
+
 </div>
 </body>
+
+
+
+
+<script>
+
+  new Vue({
+    el: '#login',
+    vuetify: new Vuetify(),
+    data () {
+      return {
+        username: '',
+        password: ''
+
+      }
+    },
+
+
+  })
+
+</script>
 </html>

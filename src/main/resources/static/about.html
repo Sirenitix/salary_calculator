@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -29,16 +30,21 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="logout()" th:href="@{/logout}">
+            <v-btn icon @click="logout()" sec:authorize ="isAuthenticated()" th:href="@{/logout}">
                 <v-icon>mdi-export</v-icon>
             </v-btn>
+
+            <v-btn icon @click="login()" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                <v-icon>mdi-account</v-icon>
+            </v-btn>
+
         </v-toolbar>
     </div>
 
 
 
     <v-sheet
-            height=813
+            height=852
             class="overflow-hidden"
             style="position: relative;"
 
@@ -100,11 +106,11 @@
 
             <v-list-item>
                 <v-list-item-avatar>
-                    <v-img src="https://media-exp1.licdn.com/dms/image/C4D03AQEoyyoiCuZw7Q/profile-displayphoto-shrink_200_200/0/1652669880083?e=1660176000&v=beta&t=woqbxhGjofcC-8-SaJBO0VQZ9oyUSGG2rJJnPUNGXHw"></v-img>
+                    <v-img src="https://cdn150.picsart.com/upscale-245339439045212.png"></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title> Suleyev Nurassyl </v-list-item-title>
+                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"  ></span></v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 

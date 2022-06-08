@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-slot="http://www.w3.org/1999/XSL/Transform" xmlns:width="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -29,16 +30,21 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="logout()" th:href="@{/logout}">
-                <v-icon>mdi-export</v-icon>
+            <v-btn icon @click="logout()" sec:authorize ="isAuthenticated()" th:href="@{/logout}">
+                    <v-icon>mdi-export</v-icon>
             </v-btn>
+
+            <v-btn icon @click="login()" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                <v-icon>mdi-account</v-icon>
+            </v-btn>
+
         </v-toolbar>
     </div>
 
 
 
     <v-sheet
-            height=813
+            height=852
             class="overflow-hidden"
             style="position: relative;"
 
@@ -50,17 +56,26 @@
                     <v-col
                             cols="12"
                             sm="4">
-                        <v-text-field
-                                label="Должность"
-                                placeholder="Должность"
-                                solo
-                        ></v-text-field>
 
-                        <v-text-field
-                                label="Образование"
-                                placeholder="Образование"
+                        <v-select
+                                v-model="select"
+                                :items="titles"
+                                :error-messages="errors"
+                                label="Должность"
+                                data-vv-name="Должность"
                                 solo
-                        ></v-text-field>
+                                required
+                        ></v-select>
+
+                        <v-select
+                                v-model="select"
+                                :items="education"
+                                :error-messages="errors"
+                                label="Образование"
+                                data-vv-name="Образование"
+                                solo
+                                required
+                        ></v-select>
 
 
 
@@ -68,12 +83,16 @@
                     <v-col
                             cols="12"
                             sm="4">
-                        <v-text-field
+
+                        <v-select
+                                v-model="select"
+                                :items="categories"
+                                :error-messages="errors"
                                 label="Категория"
-                                placeholder="Категория"
+                                data-vv-name="Категория"
                                 solo
-                                v-model="category"
-                        ></v-text-field>
+                                required
+                        ></v-select>
 
                         <v-text-field
                                 label="Стаж"
@@ -199,11 +218,11 @@
 
             <v-list-item>
                 <v-list-item-avatar>
-                    <v-img src="https://media-exp1.licdn.com/dms/image/C4D03AQEoyyoiCuZw7Q/profile-displayphoto-shrink_200_200/0/1652669880083?e=1660176000&v=beta&t=woqbxhGjofcC-8-SaJBO0VQZ9oyUSGG2rJJnPUNGXHw"></v-img>
+                    <v-img src="https://cdn150.picsart.com/upscale-245339439045212.png"></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title> Suleyev Nurassyl </v-list-item-title>
+                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"  ></span></v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -266,7 +285,21 @@
                 modal: false,
                 checkbox: false,
                 category: '',
-                result: ''
+                result: '',
+                titles: [
+                    'Учитель',
+                ],
+                education: [
+                    'Высшее',
+                    'Среднее специальное'
+                ],
+                categories: [
+                    'Без категории',
+                    '2 категория',
+                    '1 категория',
+                    'Высшая категория'
+                ],
+
 
             }
         },
@@ -274,6 +307,9 @@
         methods: {
             logout() {
                 console.log("logging out")
+            },
+            login() {
+                console.log("logging in")
             },
             calculate() {
                 // POST request using axios with error handling
