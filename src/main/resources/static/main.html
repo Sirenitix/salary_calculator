@@ -50,7 +50,7 @@
 
     >
 
-        <v-form>
+        <v-form v-model="valid" >
             <v-container>
                 <v-row>
                     <v-col
@@ -58,7 +58,7 @@
                             sm="4">
 
                         <v-select
-                                v-model="select"
+                                v-model="title"
                                 :items="titles"
                                 :error-messages="errors"
                                 label="Должность"
@@ -68,8 +68,8 @@
                         ></v-select>
 
                         <v-select
-                                v-model="select"
-                                :items="education"
+                                v-model="education"
+                                :items="educations"
                                 :error-messages="errors"
                                 label="Образование"
                                 data-vv-name="Образование"
@@ -85,7 +85,7 @@
                             sm="4">
 
                         <v-select
-                                v-model="select"
+                                v-model="category"
                                 :items="categories"
                                 :error-messages="errors"
                                 label="Категория"
@@ -97,6 +97,8 @@
                         <v-text-field
                                 label="Стаж"
                                 placeholder="Стаж"
+                                v-model="experience"
+                                th:type="number"
                                 solo
                         ></v-text-field>
 
@@ -187,6 +189,9 @@
                                 label="Нагрузка"
                                 placeholder="Нагрузка"
                                 solo
+                                v-model="weight"
+                                th:type="number"
+                                required
                         ></v-text-field>
 
 
@@ -222,7 +227,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"  ></span></v-list-item-title>
+                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"></span></v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -270,9 +275,11 @@
 
 <script>
 
+
     new Vue({
         el: '#app',
         vuetify: new Vuetify(),
+
         data () {
             return {
                 drawer: null,
@@ -285,11 +292,16 @@
                 modal: false,
                 checkbox: false,
                 category: '',
+                education: '',
+                title: '',
                 result: '',
+                experience: '',
+                weight: '',
+                valid: true,
                 titles: [
                     'Учитель',
                 ],
-                education: [
+                educations: [
                     'Высшее',
                     'Среднее специальное'
                 ],
@@ -305,6 +317,7 @@
         },
 
         methods: {
+
             logout() {
                 console.log("logging out")
             },
@@ -313,10 +326,17 @@
             },
             calculate() {
                 // POST request using axios with error handling
-                const itemsToCalculate = { category: this.category};
+                const itemsToCalculate = {
+                    category: this.category,
+                    title: this.title,
+                    education: this.education,
+                    experience: this.experience,
+                    date: this.date,
+                    weight: this.weight
+                };
                 // console.log(this.category)
                 axios.post("http://localhost:8080/calculate", itemsToCalculate)
-                    .then(response =>  this.result = response.data.category)
+                    .then(response =>  this.result = response.data)
                     .catch(error => {
                         this.errorMessage = error.message;
                         console.error("There was an error!", error);

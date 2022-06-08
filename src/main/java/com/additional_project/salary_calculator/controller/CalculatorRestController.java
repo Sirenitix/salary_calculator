@@ -11,10 +11,7 @@ import java.util.Map;
 @RestController("/")
 public class CalculatorRestController {
     @PostMapping("/calculate")
-    public Map<String ,String> createProduct(@RequestBody ItemsToCalculate itemsToCalculate){
-        System.out.println("Category: " + itemsToCalculate.getCategory());
-        Map<String, String> map = new HashMap<>();
-        map.put("category", itemsToCalculate.getCategory() + " and you too");
-        return map;
+    public ItemsToCalculate createProduct(@RequestBody ItemsToCalculate itemsToCalculate){
+        return itemsToCalculate;
     }
 }
