@@ -13,15 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class SalaryController {
-    private final SalaryService salaryService;
-    private CustomUserDetailsService userService;
 
     @Autowired
-    public SalaryController(SalaryService salaryService, CustomUserDetailsService userService) {
-        this.salaryService = salaryService;
-        this.userService = userService;
-    }
-
+    private CustomUserDetailsService userService;
 
     @GetMapping("/")
     public String salaryRequest(){
@@ -32,7 +26,6 @@ public class SalaryController {
     public String about(){
         return "about.html";
     }
-
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView createNewUser( User user, BindingResult bindingResult) {
@@ -54,6 +47,7 @@ public class SalaryController {
         }
         return modelAndView;
     }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();

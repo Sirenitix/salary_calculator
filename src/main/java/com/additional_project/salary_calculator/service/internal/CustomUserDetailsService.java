@@ -20,11 +20,12 @@ import java.util.Set;
 @Service
 @NoArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
 
     public User findByName(String name) {
@@ -36,12 +37,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
         user.setEnabled(true);
+        user.setSalary(0.0);
         userRepository.save(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-
         User user = userRepository.findByLogin(name);
         if(user != null) {
             List<GrantedAuthority> authorities = getUserAuthority(user.getRole());

@@ -102,39 +102,7 @@
                                 solo
                         ></v-text-field>
 
-                        <v-container bg grid-list-md text-center>
-                            <v-layout row wrap align-center>
-                                <v-flex>
-                        <v-checkbox
-                                v-model="checkbox" dense
-                                :label="`Работа в сельской местности`"
-                        ></v-checkbox>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
 
-
-
-                        <v-container bg fill-height grid-list-md text-center>
-                            <v-layout row wrap align-center>
-                                <v-flex>
-                                    <v-btn
-                                            color="accent"
-                                            elevation="11"
-                                            outlined
-                                            raised
-                                            rounded
-                                            text
-                                            large
-                                            inline
-                                            block
-                                            @click="calculate"
-                                    >Расчитать</v-btn>
-                                    <br>
-                                    <p style="text-align:center" v-if="result != ''" >{{result}}</p>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
 
                     </v-col>
                     <v-col
@@ -189,7 +157,7 @@
                                 label="Нагрузка"
                                 placeholder="Нагрузка"
                                 solo
-                                v-model="weight"
+                                v-model="load"
                                 th:type="number"
                                 required
                         ></v-text-field>
@@ -200,12 +168,54 @@
                 </v-row>
             </v-container>
 
-            <v-container
-                    class="px-0"
-                    fluid
-            >
+            <v-row>
+                <v-col
+                        cols="12"
+                        sm="4">
+                </v-col>
+            <v-col
+                    cols="12"
+                    sm="4">
 
+            <v-container bg grid-list-md text-center>
+                <v-layout row wrap align-center>
+                    <v-flex>
+                        <v-checkbox
+                                v-model="checkbox" dense
+                                :label="`Работа в сельской местности`"
+                        ></v-checkbox>
+                    </v-flex>
+                </v-layout>
             </v-container>
+
+
+
+            <v-container bg fill-height grid-list-md text-center>
+                <v-layout row wrap align-center>
+                    <v-flex>
+                        <v-btn
+                                color="accent"
+                                elevation="11"
+                                outlined
+                                raised
+                                rounded
+                                text
+                                large
+                                inline
+                                block
+                                @click="calculate"
+                        >Расчитать</v-btn>
+                        <br>
+                        <p style="text-align:center" v-if="result != ''" >{{result}}</p>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+            </v-col>
+                <v-col
+                        cols="12"
+                        sm="4">
+                </v-col>
+            </v-row>
             <!--        ${checkbox.toString()}                -->
 
         </v-form>
@@ -227,7 +237,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"></span></v-list-item-title>
+                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"></span> <span v-model="salary"  >{{salary}} тг</span> </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -296,8 +306,9 @@
                 title: '',
                 result: '',
                 experience: '',
-                weight: '',
+                load: '',
                 valid: true,
+                salary: 0,
                 titles: [
                     'Учитель',
                 ],
@@ -316,6 +327,10 @@
             }
         },
 
+        beforeMount(){
+            this.getSalary()
+        },
+
         methods: {
 
             logout() {
@@ -323,6 +338,14 @@
             },
             login() {
                 console.log("logging in")
+            },
+            getSalary(){
+                axios.get("http://localhost:8080/salary")
+                    .then(response => this.salary = response.data)
+                    .catch(error => {
+                        this.errorMessage = error.message;
+                        console.error("There was an error!", error);
+                    });
             },
             calculate() {
                 // POST request using axios with error handling
@@ -332,16 +355,16 @@
                     education: this.education,
                     experience: this.experience,
                     date: this.date,
-                    weight: this.weight
+                    load: this.load,
+                    checkbox: this.checkbox
                 };
-                // console.log(this.category)
+
                 axios.post("http://localhost:8080/calculate", itemsToCalculate)
                     .then(response =>  this.result = response.data)
                     .catch(error => {
                         this.errorMessage = error.message;
                         console.error("There was an error!", error);
                     });
-                // console.log("result is " + this.result)
             }
 
         },

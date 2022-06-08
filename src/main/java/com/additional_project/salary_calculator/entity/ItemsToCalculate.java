@@ -1,4 +1,4 @@
-package com.additional_project.salary_calculator.controller;
+package com.additional_project.salary_calculator.entity;
 
 import lombok.Data;
 import lombok.ToString;
@@ -11,8 +11,9 @@ public class ItemsToCalculate {
     private String category;
     private String title;
     private String education;
-    private String experience;
+    private Integer experience;
     private String date;
-    private String weight;
+    private Integer load;
+    private String checkbox;
 
 }
