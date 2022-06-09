@@ -19,9 +19,9 @@ public class CalculatorRestController {
 
 
     @RequestMapping(value = "/calculate", method = RequestMethod.POST)
-    public ItemsToCalculate createProduct(@RequestBody ItemsToCalculate itemsToCalculate){
+    public double createProduct(@RequestBody ItemsToCalculate itemsToCalculate){
         double result = salaryService.calculate(itemsToCalculate);
-        return itemsToCalculate;
+        return result;
     }
 
 
