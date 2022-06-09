@@ -193,20 +193,50 @@
             <v-container bg fill-height grid-list-md text-center>
                 <v-layout row wrap align-center>
                     <v-flex>
-                        <v-btn
-                                color="accent"
-                                elevation="11"
-                                outlined
-                                raised
-                                rounded
-                                text
-                                large
-                                inline
-                                block
-                                @click="calculate();"
-                        >Расчитать</v-btn>
+
                         <br>
-                        <p style="text-align:center" v-if="result != ''" >{{result}}</p>
+<!--                        <p style="text-align:center" v-if="result != ''" >{{result}}</p>-->
+<!--        Dialog window                -->
+                        <v-dialog
+                                v-model="dialog"
+                                persistent
+                                max-width="390"
+                                max-height="200"
+                        >
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                        color="accent"
+                                        elevation="11"
+                                        outlined
+                                        raised
+                                        rounded
+                                        text
+                                        large
+                                        inline
+                                        block
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        @click="calculate();"
+                                >Расчитать</v-btn>
+                            </template>
+                        <v-card>
+                            <v-card-title class="text-h1" style="font-size: large"  >
+                                Итоговая зароботная плата:
+                            </v-card-title>
+                            <v-card-text style="font-size: large; text-align: center;" >{{result}} тг</v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                        color="green darken-1"
+                                        text
+                                        @click="dialog = false"
+                                >
+                                    OK
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                        </v-dialog>
+<!--        /Dialog window                 -->
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -313,6 +343,7 @@
                 load: '',
                 valid: true,
                 salary: '',
+                dialog: false,
                 titles: [
                     'Учитель',
                 ],
