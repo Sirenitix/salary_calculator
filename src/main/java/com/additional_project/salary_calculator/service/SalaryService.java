@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SalaryService {
-    int calculate(ItemsToCalculate itemsToCalculate);
+    double calculate(ItemsToCalculate itemsToCalculate);
     double getSalary();
 }

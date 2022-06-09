@@ -4,14 +4,8 @@ import com.additional_project.salary_calculator.entity.ItemsToCalculate;
 import com.additional_project.salary_calculator.entity.Ratio;
 import com.additional_project.salary_calculator.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController("/")
 public class CalculatorRestController {
@@ -24,13 +18,14 @@ public class CalculatorRestController {
     }
 
 
-    @PostMapping("/calculate")
+    @RequestMapping(value = "/calculate", method = RequestMethod.POST)
     public ItemsToCalculate createProduct(@RequestBody ItemsToCalculate itemsToCalculate){
-        int result = salaryService.calculate(itemsToCalculate);
+        double result = salaryService.calculate(itemsToCalculate);
         return itemsToCalculate;
     }
 
-    @GetMapping("/salary")
+
+    @RequestMapping(value = "/salary", method = RequestMethod.GET)
     public double createProduct(){
         return salaryService.getSalary();
     }

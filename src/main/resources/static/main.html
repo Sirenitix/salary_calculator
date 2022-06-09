@@ -203,7 +203,7 @@
                                 large
                                 inline
                                 block
-                                @click="calculate"
+                                @click="calculate();"
                         >Расчитать</v-btn>
                         <br>
                         <p style="text-align:center" v-if="result != ''" >{{result}}</p>
@@ -237,7 +237,11 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"></span> <span v-model="salary"  >{{salary}} тг</span> </v-list-item-title>
+                    <v-list-item-title style="margin: 10px" >
+                        <span sec:authorize="!isAuthenticated()" >Гость</span>
+                        <span sec:authorize="isAuthenticated()" sec:authentication="name" ></span>
+                        <span sec:authorize="isAuthenticated()" v-model="salary"   >{{salary}} тг</span>
+                    </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -308,7 +312,7 @@
                 experience: '',
                 load: '',
                 valid: true,
-                salary: 0,
+                salary: '',
                 titles: [
                     'Учитель',
                 ],
@@ -327,7 +331,7 @@
             }
         },
 
-        beforeMount(){
+        mounted () {
             this.getSalary()
         },
 
@@ -342,12 +346,10 @@
             getSalary(){
                 axios.get("http://localhost:8080/salary")
                     .then(response => this.salary = response.data)
-                    .catch(error => {
-                        this.errorMessage = error.message;
-                        console.error("There was an error!", error);
-                    });
+                    .catch(error => { console.error("There was an error!", error.message); });
             },
             calculate() {
+                setTimeout(this.getSalary,1000);
                 // POST request using axios with error handling
                 const itemsToCalculate = {
                     category: this.category,
@@ -361,10 +363,8 @@
 
                 axios.post("http://localhost:8080/calculate", itemsToCalculate)
                     .then(response =>  this.result = response.data)
-                    .catch(error => {
-                        this.errorMessage = error.message;
-                        console.error("There was an error!", error);
-                    });
+                    .catch(error => { console.error("There was an error!", error.message); });
+
             }
 
         },

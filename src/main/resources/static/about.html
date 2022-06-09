@@ -110,7 +110,10 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title style="margin: 10px" > <span sec:authentication="name"  ></span></v-list-item-title>
+                    <v-list-item-title style="margin: 10px" >
+                        <span sec:authorize="!isAuthenticated()" >Гость</span>
+                        <span sec:authorize="isAuthenticated()" sec:authentication="name" ></span>
+                        <span sec:authorize="isAuthenticated()" v-model="salary"   >{{salary}} тг</span>
                 </v-list-item-content>
             </v-list-item>
 
