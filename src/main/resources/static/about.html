@@ -114,6 +114,7 @@
                         <span sec:authorize="!isAuthenticated()" >Гость</span>
                         <span sec:authorize="isAuthenticated()" sec:authentication="name" ></span>
                         <span sec:authorize="isAuthenticated()" v-model="salary"   >{{salary}} тг</span>
+                    </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
@@ -176,12 +177,22 @@
                 modal: false,
                 checkbox: false,
 
+
             }
+        },
+
+        mounted () {
+            this.getSalary()
         },
 
         methods: {
             logout() {
                 console.log("logging out")
+            },
+            getSalary(){
+                axios.get("http://localhost:8080/salary")
+                    .then(response => this.salary = response.data)
+                    .catch(error => { console.error("There was an error!", error.message); });
             },
 
         },
