@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 
@@ -16,7 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<body>
+<body style="font-family: sans-serif">
 <div id="app" data-app >
     <div>
         <v-toolbar
@@ -223,6 +224,7 @@
                             <v-card-title class="text-h1" style="font-size: large"  >
                                 Итоговая зароботная плата:
                             </v-card-title>
+
                             <v-card-text style="font-size: large; text-align: center;" >{{result}} тг</v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -405,4 +407,5 @@
 
 
 </script>
+
 </html>
