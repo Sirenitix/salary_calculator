@@ -340,7 +340,7 @@ public class SalaryServiceImpl implements SalaryService {
 
         System.out.println((Math.round(result * 100.0) / 100.0));
         customUserRepository.updateUserSalary(getLogin(), (Math.round(result * 100.0) / 100.0));
-        return (Math.round(result * 100.0) / 100.0);
+        return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
     }
 
     @Override

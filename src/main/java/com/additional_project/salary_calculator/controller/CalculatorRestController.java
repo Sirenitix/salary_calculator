@@ -19,6 +19,11 @@ public class CalculatorRestController {
         return result;
     }
 
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public double error(){
+        return 0;
+    }
+
 
     @RequestMapping(value = "/salary", method = RequestMethod.GET)
     public double createProduct(){
