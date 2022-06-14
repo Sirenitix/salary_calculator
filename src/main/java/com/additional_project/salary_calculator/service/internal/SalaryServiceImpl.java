@@ -326,7 +326,7 @@ public class SalaryServiceImpl implements SalaryService {
         double result = 0.0;
 
         Double rate = educationLevelMap.get(itemsToCalculate.getEducation()).get(new Ratio(itemsToCalculate.getExperience(), categoryMap.get(itemsToCalculate.getCategory())));
-        salary = ((bdo * rate * 1.75)*itemsToCalculate.getLoad())/16;
+        salary = ((bdo * rate * 1.75)*itemsToCalculate.getLoads())/16;
 
         if(salary < mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25){
             result = salary - (((salary * 0.1) - (salary * 0.02) - (mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 14)) * 0.01);

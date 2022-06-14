@@ -13,7 +13,7 @@ public class ItemsToCalculate {
     private String education;
     private Integer experience;
     private String date;
-    private Integer load;
+    private Integer loads;
     private String checkbox;
 
 }

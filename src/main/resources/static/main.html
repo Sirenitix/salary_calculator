@@ -51,7 +51,53 @@
 
     >
 
-        <v-form v-model="valid" >
+<!--   About      -->
+        <v-form v-if="isAbout">
+            <v-container>
+                <v-row>
+                    <v-col
+                            cols="12"
+                            sm="4">
+
+                    </v-col>
+                    <v-col
+                            cols="12"
+                            sm="4">
+
+
+                        <v-hover
+                                v-slot="{ hover }"
+                                disabled
+                        >
+                            <v-card
+                                    :elevation="hover ? 12 : 2"
+                                    class="mx-auto"
+                                    height="350"
+                                    max-width="350"
+                            >
+                                <v-card-text class="my-4 text-center text-h1">
+                                    Служба технической поддержки
+                                    Вы можете обратиться по телефону 8-777-574-25-40
+                                    Или написать нам на адрес suleevn@gmail.com
+                                </v-card-text>
+                            </v-card>
+                        </v-hover>
+
+                    </v-col>
+                    <v-col
+                            cols="12"
+                            sm="4">
+
+
+                    </v-col>
+
+                </v-row>
+            </v-container>
+
+
+        </v-form>
+<!--/About-->
+        <v-form v-if="!isAbout" ref="form">
             <v-container>
                 <v-row>
                     <v-col
@@ -66,6 +112,7 @@
                                 data-vv-name="Должность"
                                 solo
                                 required
+                                :rules="fsRule"
                         ></v-select>
 
                         <v-select
@@ -76,6 +123,7 @@
                                 data-vv-name="Образование"
                                 solo
                                 required
+                                :rules="sRule"
                         ></v-select>
 
 
@@ -93,6 +141,7 @@
                                 data-vv-name="Категория"
                                 solo
                                 required
+                                :rules="tRule"
                         ></v-select>
 
                         <v-text-field
@@ -101,6 +150,7 @@
                                 v-model="experience"
                                 th:type="number"
                                 solo
+                                :rules="fRule"
                         ></v-text-field>
 
 
@@ -158,9 +208,10 @@
                                 label="Нагрузка"
                                 placeholder="Нагрузка"
                                 solo
-                                v-model="load"
+                                v-model="loads"
                                 th:type="number"
                                 required
+                                :rules="ffRule"
                         ></v-text-field>
 
 
@@ -198,28 +249,24 @@
                         <br>
 <!--                        <p style="text-align:center" v-if="result != ''" >{{result}}</p>-->
 <!--        Dialog window                -->
+                        <v-btn
+                                color="accent"
+                                elevation="11"
+                                outlined
+                                raised
+                                rounded
+                                text
+                                large
+                                inline
+                                block
+                                @click="validation();"
+                        >Расчитать</v-btn>
                         <v-dialog
                                 v-model="dialog"
                                 persistent
                                 max-width="390"
                                 max-height="200"
                         >
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn
-                                        color="accent"
-                                        elevation="11"
-                                        outlined
-                                        raised
-                                        rounded
-                                        text
-                                        large
-                                        inline
-                                        block
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        @click="calculate();"
-                                >Расчитать</v-btn>
-                            </template>
                         <v-card>
                             <v-card-title class="text-h1" style="font-size: large"  >
                                 Итоговая зароботная плата:
@@ -280,7 +327,7 @@
             <v-divider></v-divider>
 
             <v-list dense>
-                <v-list-item th:href="@{/}"
+                <v-list-item  @click="isAbout = false"
                         link
                 >
                     <v-list-item-icon>
@@ -295,7 +342,7 @@
 
                 <v-list-item
                         link
-                        th:href="@{/about}"
+                        @click="isAbout = true"
                 >
 
                     <v-list-item-icon>
@@ -313,6 +360,7 @@
     </v-sheet>
 
 
+
 </div>
 </body>
 
@@ -324,6 +372,7 @@
 
     new Vue({
         el: '#app',
+        name: 'main',
         vuetify: new Vuetify(),
 
         data () {
@@ -342,10 +391,11 @@
                 title: '',
                 result: '',
                 experience: '',
-                load: '',
+                loads: '',
                 valid: true,
                 salary: '',
                 dialog: false,
+                isAbout: false,
                 titles: [
                     'Учитель',
                 ],
@@ -359,16 +409,40 @@
                     '1 категория',
                     'Высшая категория'
                 ],
+                fsRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                sRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                tRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                fRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                ffRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+
+
 
 
             }
         },
 
         mounted () {
-            this.getSalary()
+            setInterval(this.getSalary, 2000);
         },
 
         methods: {
+            validation() {
+                this.$refs.form.validate();
+             if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){
+                this.calculate();
+                this.dialog = true;
+             }
+            },
 
             logout() {
                 console.log("logging out")
@@ -390,7 +464,7 @@
                     education: this.education,
                     experience: this.experience,
                     date: this.date,
-                    load: this.load,
+                    loads: this.loads,
                     checkbox: this.checkbox
                 };
 

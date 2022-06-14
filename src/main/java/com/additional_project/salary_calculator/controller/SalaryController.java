@@ -22,11 +22,6 @@ public class SalaryController {
         return "main.html";
     }
 
-    @GetMapping("/about")
-    public String about(){
-        return "about.html";
-    }
-
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView createNewUser( User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
