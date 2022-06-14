@@ -20,8 +20,8 @@ public class CalculatorRestController {
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
-    public double error(){
-        return 0;
+    public String error(){
+        return "0";
     }
 
 

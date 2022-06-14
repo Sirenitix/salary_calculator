@@ -268,11 +268,16 @@
                                 max-height="200"
                         >
                         <v-card>
-                            <v-card-title class="text-h1" style="font-size: large"  >
+                            <v-card-title class="text-h1" style="font-size: large" v-if="result" >
                                 Итоговая зароботная плата:
                             </v-card-title>
 
-                            <v-card-text style="font-size: large; text-align: center;" >{{result}} тг</v-card-text>
+                            <v-card-title class="text-h1" style="font-size: large" v-if="!result" >
+                                Ошибка:
+                            </v-card-title>
+
+                            <v-card-text style="font-size: large; text-align: center;" v-if="result" >{{result}} тг</v-card-text>
+                            <v-card-text style="font-size: large; text-align: center;" v-if="!result" >Некорректные данные</v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -472,6 +477,8 @@
                 axios.post("http://localhost:8080/calculate", itemsToCalculate)
                     .then(response =>  this.result = response.data)
                     .catch(error => { console.error("There was an error!", error.message); });
+
+                console.log(this.result);
 
             }
 
