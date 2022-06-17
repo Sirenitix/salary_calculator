@@ -322,8 +322,12 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public double calculate(ItemsToCalculate itemsToCalculate) {
 
-        double salary = 0.0;
-        double result = 0.0;
+        double salary;
+        double result;
+
+        if(itemsToCalculate.getExperience() > 25){
+            itemsToCalculate.setExperience(26);
+        }
 
         Double rate = educationLevelMap.get(itemsToCalculate.getEducation()).get(new Ratio(itemsToCalculate.getExperience(), categoryMap.get(itemsToCalculate.getCategory())));
         salary = ((bdo * rate * 1.75)*itemsToCalculate.getLoads())/16;
