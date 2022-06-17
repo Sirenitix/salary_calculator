@@ -1,6 +1,5 @@
 package com.additional_project.salary_calculator.config;
 
-
 import com.additional_project.salary_calculator.service.internal.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -2,11 +2,6 @@ package com.additional_project.salary_calculator.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
 import java.util.Map;
 
 @Data

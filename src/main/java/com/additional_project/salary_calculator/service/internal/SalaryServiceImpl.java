@@ -2,24 +2,16 @@ package com.additional_project.salary_calculator.service.internal;
 
 import com.additional_project.salary_calculator.entity.ItemsToCalculate;
 import com.additional_project.salary_calculator.entity.Ratio;
-import com.additional_project.salary_calculator.entity.User;
 import com.additional_project.salary_calculator.repository.CustomUserRepository;
 import com.additional_project.salary_calculator.repository.UserRepository;
 import com.additional_project.salary_calculator.service.SalaryService;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import static com.additional_project.salary_calculator.entity.Ratio.*;
 

@@ -1,7 +1,6 @@
 package com.additional_project.salary_calculator.controller;
 
 import com.additional_project.salary_calculator.entity.User;
-import com.additional_project.salary_calculator.service.SalaryService;
 import com.additional_project.salary_calculator.service.internal.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

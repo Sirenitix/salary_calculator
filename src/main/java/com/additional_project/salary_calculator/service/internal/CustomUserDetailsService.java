@@ -1,8 +1,9 @@
 package com.additional_project.salary_calculator.service.internal;
 
+import java.util.*;
+import lombok.NoArgsConstructor;
 import com.additional_project.salary_calculator.entity.User;
 import com.additional_project.salary_calculator.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,10 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 @Service
 @NoArgsConstructor
