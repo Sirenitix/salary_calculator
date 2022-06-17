@@ -19,6 +19,7 @@
 
 <body style="font-family: sans-serif">
 <div id="app" data-app >
+<!--   NAVBAR    -->
     <div>
         <v-toolbar
                 dark
@@ -42,7 +43,7 @@
         </v-toolbar>
     </div>
 
-
+    <!--   /NAVBAR    -->
 
     <v-sheet
             height=852
@@ -96,7 +97,8 @@
 
 
         </v-form>
-<!--/About-->
+<!--           /About                -->
+
         <v-form v-if="!isAbout" ref="form">
             <v-container>
                 <v-row>
@@ -247,7 +249,6 @@
                     <v-flex>
 
                         <br>
-<!--                        <p style="text-align:center" v-if="result != ''" >{{result}}</p>-->
 <!--        Dialog window                -->
                         <v-btn
                                 color="accent"
@@ -300,14 +301,13 @@
                         sm="4">
                 </v-col>
             </v-row>
-            <!--        ${checkbox.toString()}                -->
 
         </v-form>
 
 
 
 
-
+<!-- Menu bar  -->
         <v-navigation-drawer
                 v-model="drawer"
                 v-if="drawer"
@@ -363,7 +363,7 @@
         </v-navigation-drawer>
 
     </v-sheet>
-
+    <!-- /Menu bar  -->
 
 
 </div>
@@ -430,9 +430,6 @@
                     v => v === '' ? 'Это обязательное поле' : false
                 ],
 
-
-
-
             }
         },
 
@@ -485,8 +482,6 @@
         },
 
     })
-
-
 
 </script>
 

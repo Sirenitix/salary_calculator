@@ -20,7 +20,11 @@
 
 <body style="font-family: sans-serif">
 <div id="login" data-app >
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
   <v-form>
     <form th:action="@{/login}" method="post">
     <v-container >
@@ -37,6 +41,8 @@
 
 
           <div>Login</div>
+
+          <!--          Log in input field         -->
           <v-text-field
                   v-model="username"
                   placeholder="Login"
@@ -44,6 +50,9 @@
                   clearable
                   th:name="login"
           ></v-text-field>
+          <!--          /Log in input field         -->
+
+          <!--          Password input field         -->
           <div>Password</div>
           <v-text-field
                   v-model="password"
@@ -52,9 +61,12 @@
                   clearable
                   th:name="password"
           ></v-text-field>
+
+          <!--          /Password input field         -->
           <v-container bg fill-height grid-list-md text-center>
             <v-layout row wrap align-center>
               <v-flex>
+                <!--          Log in button         -->
                 <v-btn
 
                         color="accent"
@@ -68,7 +80,9 @@
                         block
                         type="submit"
                 >Log in</v-btn>
+                <!--          /Log in button         -->
                 <br>
+                <!--          Registration button       -->
                   <v-btn
 
                           color="accent"
@@ -82,7 +96,9 @@
                           block
                           th:href="@{/signup}"
                   >Registration</v-btn>
+                <!--          /Registration button        -->
                 <br>
+                <!--          Home button         -->
                 <v-btn
 
                         color="accent"
@@ -96,6 +112,8 @@
                         block
                         th:href="@{/}"
                 ><v-icon>mdi-calculator</v-icon> </v-btn>
+                <!--          /Home button          -->
+
                 <br>
                 <div th:if="${param.error}" style="text-align: center">
                   Invalid email or password.
@@ -105,7 +123,6 @@
           </v-container>
 
 
-<!--          Registration          -->
 
         </v-col>
 
@@ -124,8 +141,6 @@
 
 </div>
 </body>
-
-
 
 
 <script>
