@@ -54,17 +54,13 @@
 
 <!--   About      -->
         <v-form v-if="isAbout">
-            <v-container>
-                <v-row>
+                <v-row >
                     <v-col
-                            cols="12"
-                            sm="4">
+                            sm="5">
 
                     </v-col>
                     <v-col
-                            cols="12"
-                            sm="4">
-
+                            sm="5">
 
                         <v-hover
                                 v-slot="{ hover }"
@@ -76,7 +72,7 @@
                                     height="350"
                                     max-width="350"
                             >
-                                <v-card-text class="my-4 text-center text-h1">
+                                <v-card-text class="my-4 text-center text-h1" >
                                     Служба технической поддержки
                                     Вы можете обратиться по телефону 8-777-574-25-40
                                     Или написать нам на адрес suleevn@gmail.com
@@ -93,7 +89,6 @@
                     </v-col>
 
                 </v-row>
-            </v-container>
 
 
         </v-form>
@@ -256,42 +251,80 @@
 
                         <br>
 <!--              Dialog window                -->
-
-<!--                      Calculate buttons                   -->
-                        <v-btn
-                                color="accent"
-                                elevation="11"
-                                outlined
-                                raised
-                                rounded
-                                text
-                                large
-                                inline
-                                block
-                                @click="validation();"
-                        >Расчитать</v-btn>
-                        <br>
-                        <v-btn
-                                color="accent"
-                                elevation="11"
-                                outlined
-                                raised
-                                rounded
-                                text
-                                large
-                                inline
-                                block
-                                @click="dialogTwo = true"
-                        >
-                            Расчитать с доплатой
-                        </v-btn>
-
-
                         <v-dialog
-                                v-model="dialogTwo"
+                                v-model="dialog"
+                                persistent
+                                max-width="390"
+                                max-height="200"
+                        >
+
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn
+                                        color="accent"
+                                        elevation="11"
+                                        outlined
+                                        raised
+                                        rounded
+                                        text
+                                        large
+                                        inline
+                                        block
+                                        @click="validation();"
+                                >Расчитать</v-btn>
+                            </template>
+<!--                      Calculate buttons                   -->
+                        <template v-slot:default="dialog">
+
+                                <v-card>
+                                    <v-card-title class="text-h1" style="font-size: large" v-if="result" >
+                                        Итоговая зароботная плата:
+                                    </v-card-title>
+
+                                    <v-card-title class="text-h1" style="font-size: large" v-if="!result" >
+                                        Ошибка:
+                                    </v-card-title>
+
+                                    <v-card-text style="font-size: large; text-align: center;" v-if="result" >{{result}} тг</v-card-text>
+                                    <v-card-text style="font-size: large; text-align: center;" v-if="!result" >Некорректные данные</v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                                color="green darken-1"
+                                                text
+                                                @click="dialog.value = false"
+                                        >
+                                            OK
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+
+                        </template>
+
+                        </v-dialog>
+                        <br>
+                        <v-dialog
                                 persistent
                                 max-width="600px"
                         >
+                            <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                                color="accent"
+                                elevation="11"
+                                outlined
+                                raised
+                                rounded
+                                text
+                                large
+                                inline
+                                block
+                                v-bind="attrs"
+                                v-on="on"
+                        >
+                            Расчитать с доплатой
+                        </v-btn>
+                            </template>
+                            <template v-slot:default="dialogEx">
+
 <!--       Additional pay section        -->
                                 <v-card >
                                     <v-tabs>
@@ -396,14 +429,14 @@
                                                 <v-btn
                                                         color="blue darken-1"
                                                         text
-                                                        @click="dialogTwo = false"
+                                                        @click="dialogEx.value = false"
                                                 >
                                                     Закрыть
                                                 </v-btn>
                                                 <v-btn
                                                         color="blue darken-1"
                                                         text
-                                                        @click="dialogTwo = false"
+                                                        @click="dialogEx.value = false"
                                                 >
                                                     Расчитать
                                                 </v-btn>
@@ -445,14 +478,14 @@
                                                 <v-btn
                                                         color="blue darken-1"
                                                         text
-                                                        @click="dialogTwo = false"
+                                                        @click="dialogEx.value = false"
                                                 >
                                                     Закрыть
                                                 </v-btn>
                                                 <v-btn
                                                         color="blue darken-1"
                                                         text
-                                                        @click="dialogTwo = false"
+                                                        @click="dialogEx.value = false"
                                                 >
                                                     Расчитать
                                                 </v-btn>
@@ -464,37 +497,10 @@
 
 <!--       /Additional pay section        -->
                             </v-card>
+                            </template>
                         </v-dialog>
 <!--                        /Calculate buttons                   -->
-                        <v-dialog
-                                v-model="dialog"
-                                persistent
-                                max-width="390"
-                                max-height="200"
-                        >
-                        <v-card>
-                            <v-card-title class="text-h1" style="font-size: large" v-if="result" >
-                                Итоговая зароботная плата:
-                            </v-card-title>
 
-                            <v-card-title class="text-h1" style="font-size: large" v-if="!result" >
-                                Ошибка:
-                            </v-card-title>
-
-                            <v-card-text style="font-size: large; text-align: center;" v-if="result" >{{result}} тг</v-card-text>
-                            <v-card-text style="font-size: large; text-align: center;" v-if="!result" >Некорректные данные</v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                        color="green darken-1"
-                                        text
-                                        @click="dialog = false"
-                                >
-                                    OK
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        </v-dialog>
 <!--        /Dialog window                 -->
                     </v-flex>
                 </v-layout>
@@ -577,119 +583,119 @@
 
 
 
-<script>
+<!--<script>-->
 
 
-    new Vue({
-        el: '#app',
-        name: 'main',
-        vuetify: new Vuetify(),
+<!--    new Vue({-->
+<!--        el: '#app',-->
+<!--        name: 'main',-->
+<!--        vuetify: new Vuetify(),-->
 
-        data () {
-            return {
-                drawer: false,
-                items: [
-                    { title: 'Главная страница', icon: 'mdi-view-dashboard', ref:'/' },
-                    { title: 'Про приложение', icon: 'mdi-forum' , ref: '/about'},
-                ],
-                date: new Date().toISOString().substr(0, 7),
-                menu: false,
-                modal: false,
-                checkbox: false,
-                category: '',
-                education: '',
-                title: '',
-                result: '',
-                experience: '',
-                loads: '',
-                valid: true,
-                salary: '',
-                dialog: false,
-                dialogTwo: false,
-                isAbout: false,
-                addPay: false,
-                titles: [
-                    'Учитель',
-                ],
-                educations: [
-                    'Высшее',
-                    'Среднее специальное'
-                ],
-                categories: [
-                    'Без категории',
-                    '2 категория',
-                    '1 категория',
-                    'Высшая категория'
-                ],
-                fsRule: [
-                    v => v === '' ? 'Это обязательное поле' : false
-                ],
-                sRule: [
-                    v => v === '' ? 'Это обязательное поле' : false
-                ],
-                tRule: [
-                    v => v === '' ? 'Это обязательное поле' : false
-                ],
-                fRule: [
-                    v => v === '' ? 'Это обязательное поле' : false
-                ],
-                ffRule: [
-                    v => v === '' ? 'Это обязательное поле' : false
-                ],
+<!--        data () {-->
+<!--            return {-->
+<!--                drawer: false,-->
+<!--                items: [-->
+<!--                    { title: 'Главная страница', icon: 'mdi-view-dashboard', ref:'/' },-->
+<!--                    { title: 'Про приложение', icon: 'mdi-forum' , ref: '/about'},-->
+<!--                ],-->
+<!--                date: new Date().toISOString().substr(0, 7),-->
+<!--                menu: false,-->
+<!--                modal: false,-->
+<!--                checkbox: false,-->
+<!--                category: '',-->
+<!--                education: '',-->
+<!--                title: '',-->
+<!--                result: '',-->
+<!--                experience: '',-->
+<!--                loads: '',-->
+<!--                valid: true,-->
+<!--                salary: '',-->
+<!--                dialog: false,-->
+<!--                dialogTwo: false,-->
+<!--                isAbout: false,-->
+<!--                addPay: false,-->
+<!--                titles: [-->
+<!--                    'Учитель',-->
+<!--                ],-->
+<!--                educations: [-->
+<!--                    'Высшее',-->
+<!--                    'Среднее специальное'-->
+<!--                ],-->
+<!--                categories: [-->
+<!--                    'Без категории',-->
+<!--                    '2 категория',-->
+<!--                    '1 категория',-->
+<!--                    'Высшая категория'-->
+<!--                ],-->
+<!--                fsRule: [-->
+<!--                    v => v === '' ? 'Это обязательное поле' : false-->
+<!--                ],-->
+<!--                sRule: [-->
+<!--                    v => v === '' ? 'Это обязательное поле' : false-->
+<!--                ],-->
+<!--                tRule: [-->
+<!--                    v => v === '' ? 'Это обязательное поле' : false-->
+<!--                ],-->
+<!--                fRule: [-->
+<!--                    v => v === '' ? 'Это обязательное поле' : false-->
+<!--                ],-->
+<!--                ffRule: [-->
+<!--                    v => v === '' ? 'Это обязательное поле' : false-->
+<!--                ],-->
 
-            }
-        },
+<!--            }-->
+<!--        },-->
 
-        mounted () {
-            this.getSalary()
-            setInterval(this.getSalary, 2000);
-        },
+<!--        mounted () {-->
+<!--            this.getSalary()-->
+<!--            setInterval(this.getSalary, 2000);-->
+<!--        },-->
 
-        methods: {
-            validation() {
-                this.$refs.form.validate();
-             if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){
-                this.calculate();
-                this.dialog = true;
-             }
-            },
+<!--        methods: {-->
+<!--            validation() {-->
+<!--                this.$refs.form.validate();-->
+<!--             if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){-->
+<!--                this.calculate();-->
+<!--                this.dialog = true;-->
+<!--             }-->
+<!--            },-->
 
-            logout() {
-                console.log("logging out")
-            },
-            login() {
-                console.log("logging in")
-            },
-            getSalary(){
-                axios.get("http://localhost:8080/salary")
-                    .then(response => this.salary = response.data)
-                    .catch(error => { console.error("There was an error!", error.message); });
-            },
-            calculate() {
-                setTimeout(this.getSalary,1000);
-                // POST request using axios with error handling
-                const itemsToCalculate = {
-                    category: this.category,
-                    title: this.title,
-                    education: this.education,
-                    experience: this.experience,
-                    date: this.date,
-                    loads: this.loads,
-                    checkbox: this.checkbox
-                };
+<!--            logout() {-->
+<!--                console.log("logging out")-->
+<!--            },-->
+<!--            login() {-->
+<!--                console.log("logging in")-->
+<!--            },-->
+<!--            getSalary(){-->
+<!--                axios.get("http://localhost:8080/salary")-->
+<!--                    .then(response => this.salary = response.data)-->
+<!--                    .catch(error => { console.error("There was an error!", error.message); });-->
+<!--            },-->
+<!--            calculate() {-->
+<!--                setTimeout(this.getSalary,1000);-->
+<!--                // POST request using axios with error handling-->
+<!--                const itemsToCalculate = {-->
+<!--                    category: this.category,-->
+<!--                    title: this.title,-->
+<!--                    education: this.education,-->
+<!--                    experience: this.experience,-->
+<!--                    date: this.date,-->
+<!--                    loads: this.loads,-->
+<!--                    checkbox: this.checkbox-->
+<!--                };-->
 
-                axios.post("http://localhost:8080/calculate", itemsToCalculate)
-                    .then(response =>  this.result = response.data)
-                    .catch(error => { console.error("There was an error!", error.message); });
+<!--                axios.post("http://localhost:8080/calculate", itemsToCalculate)-->
+<!--                    .then(response =>  this.result = response.data)-->
+<!--                    .catch(error => { console.error("There was an error!", error.message); });-->
 
-                console.log(this.result);
+<!--                console.log(this.result);-->
 
-            }
+<!--            }-->
 
-        },
+<!--        },-->
 
-    })
+<!--    })-->
 
-</script>
+<!--</script>-->
 
 </html>
