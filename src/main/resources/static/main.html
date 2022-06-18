@@ -421,8 +421,8 @@
                                                                 sm="6"
                                                         >
                                                             <v-select
-                                                                    :items="['Весь день', 'Пол дня', 'Мастерской весь день', 'Мастерской пол дня']"
-                                                                    label="За заведование кабинетом"
+                                                                    :items="['1 уровень', '2 уровень', '3 уровень']"
+                                                                    label="За уровень по программам НИШ"
                                                                     required
                                                             ></v-select>
                                                         </v-col>
@@ -431,8 +431,8 @@
                                                                 sm="6"
                                                         >
                                                             <v-autocomplete
-                                                                    :items="['1-4 классы полный', '1-4 классы неполный', '5-11 классы полный', '5-11 классы неполный']"
-                                                                    label="За руководство"
+                                                                    :items="['Педагог-мастер', 'Педагог-исследователь', 'Педагог-эксперт', 'Педагог-модератор']"
+                                                                    label="За квалификационную категорию"
                                                                     hint="Неполный класс до 14 включительно"
                                                             ></v-autocomplete>
                                                         </v-col>
@@ -467,7 +467,7 @@
                         </v-dialog>
 <!--                        /Calculate buttons                   -->
                         <v-dialog
-                                v-model="dialogResult"
+                                v-model="dialog"
                                 persistent
                                 max-width="390"
                                 max-height="200"
@@ -488,7 +488,7 @@
                                 <v-btn
                                         color="green darken-1"
                                         text
-                                        @click="dialogResult = false"
+                                        @click="dialog = false"
                                 >
                                     OK
                                 </v-btn>
@@ -588,7 +588,6 @@
         data () {
             return {
                 drawer: false,
-                dialogResult: false,
                 items: [
                     { title: 'Главная страница', icon: 'mdi-view-dashboard', ref:'/' },
                     { title: 'Про приложение', icon: 'mdi-forum' , ref: '/about'},
