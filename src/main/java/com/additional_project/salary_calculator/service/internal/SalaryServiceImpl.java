@@ -321,6 +321,10 @@ public class SalaryServiceImpl implements SalaryService {
             itemsToCalculate.setExperience(26);
         }
 
+        if(itemsToCalculate.getExperience() > 25){
+            itemsToCalculate.setExperience(26);
+        }
+
         Double rate = educationLevelMap.get(itemsToCalculate.getEducation()).get(new Ratio(itemsToCalculate.getExperience(), categoryMap.get(itemsToCalculate.getCategory())));
         salary = ((bdo * rate * 1.75)*itemsToCalculate.getLoads())/16;
 
