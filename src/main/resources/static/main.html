@@ -17,9 +17,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<body style="font-family: sans-serif">
+<body >
 
-<div id="app" data-app >
+<div id="deamon" data-app style="font-family: sans-serif" >
 
 <!--   NAVBAR    -->
 
@@ -34,11 +34,11 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon @click="logout()" sec:authorize ="isAuthenticated()" th:href="@{/logout}">
+            <v-btn icon sec:authorize ="isAuthenticated()" th:href="@{/logout}">
                     <v-icon>mdi-export</v-icon>
             </v-btn>
 
-            <v-btn icon @click="login()" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+            <v-btn icon sec:authorize="!isAuthenticated()" th:href="@{/login}">
                 <v-icon>mdi-account</v-icon>
             </v-btn>
 
@@ -52,47 +52,7 @@
 
     >
 
-<!--   About      -->
-        <v-form v-if="isAbout">
-                <v-row >
-                    <v-col
-                            sm="5">
 
-                    </v-col>
-                    <v-col
-                            sm="5">
-
-                        <v-hover
-                                v-slot="{ hover }"
-                                disabled
-                        >
-                            <v-card
-                                    :elevation="hover ? 12 : 2"
-                                    class="mx-auto"
-                                    height="350"
-                                    max-width="350"
-                            >
-                                <v-card-text class="my-4 text-center text-h1" >
-                                    Служба технической поддержки
-                                    Вы можете обратиться по телефону 8-777-574-25-40
-                                    Или написать нам на адрес suleevn@gmail.com
-                                </v-card-text>
-                            </v-card>
-                        </v-hover>
-
-                    </v-col>
-                    <v-col
-                            cols="12"
-                            sm="4">
-
-
-                    </v-col>
-
-                </v-row>
-
-
-        </v-form>
-<!--           /About                -->
 <!--              Additional section              -->
 
 
@@ -104,7 +64,6 @@
             <v-container>
                 <v-row>
                     <v-col
-                            cols="12"
                             sm="4">
 
                         <v-select
@@ -133,7 +92,6 @@
 
                     </v-col>
                     <v-col
-                            cols="12"
                             sm="4">
 
                         <v-select
@@ -160,9 +118,7 @@
 
                     </v-col>
                     <v-col
-                            cols="12"
                             sm="4">
-
 <!--      Date picker                  -->
 
                         <v-dialog
@@ -225,11 +181,9 @@
 
             <v-row>
                 <v-col
-                        cols="12"
                         sm="4">
                 </v-col>
             <v-col
-                    cols="12"
                     sm="4">
 
             <v-container bg grid-list-md text-center>
@@ -248,7 +202,6 @@
             <v-container bg fill-height grid-list-md text-center>
                 <v-layout row wrap align-center>
                     <v-flex>
-
                         <br>
 <!--              Dialog window                -->
                         <v-dialog
@@ -329,8 +282,7 @@
                                 <v-card >
                                     <v-tabs>
                                         <v-col
-                                                    cols="10"
-                                                    md="3">
+                                                    md="6">
                                         <v-tab>
                                             <v-icon right>
                                                 mdi-plus
@@ -338,8 +290,8 @@
                                         </v-tab>
                                             </v-col>
                                             <v-col
-                                                    cols="10"
-                                                    md="3">
+                                                   
+                                                    md="6">
                                         <v-tab>
                                             <v-icon right >
                                                 mdi-plus-box
@@ -356,7 +308,6 @@
                                                 <v-container>
                                                     <v-row>
                                                         <v-col
-                                                                cols="12"
                                                                 sm="6"
                                                                 md="6"
                                                         >
@@ -367,7 +318,6 @@
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
-                                                                cols="12"
                                                                 sm="6"
                                                                 md="6"
                                                         >
@@ -377,64 +327,60 @@
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
-                                                                cols="12"
+                                                                sm="6"
+                                                                md="6"
                                                         >
                                                             <v-text-field
-                                                                    label="За часы работы с лицейскими и гимназическими классами"
+                                                                    label="Часы работы с лицейскими и гимназическими классами"
                                                                     th:type="number"
                                                                     persistent-hint
                                                                     required
                                                             ></v-text-field>
                                                         </v-col>
-                                                        <v-col cols="12">
+                                                        <v-col
+                                                               sm="6"
+                                                               md="6">
                                                             <v-text-field
-                                                                    label="За часы углубленного изучения"
-                                                                    th:type="number"
-                                                                    required
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12">
-                                                            <v-text-field
-                                                                    label="За часы по предметам профильного назначения*"
+                                                                    label="Часы углубленного изучения"
                                                                     th:type="number"
                                                                     required
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
-                                                                cols="12"
+                                                               sm="6"
+                                                               md="6">
+                                                            <v-text-field
+                                                                    label="Часы по предметам профильного назначения*"
+                                                                    th:type="number"
+                                                                    required
+                                                            ></v-text-field>
+                                                        </v-col>
+                                                        <v-col
                                                                 sm="6"
+                                                                md="6"
                                                         >
                                                             <v-select
                                                                     :items="['Весь день', 'Пол дня', 'Мастерской весь день', 'Мастерской пол дня']"
-                                                                    label="За заведование кабинетом"
+                                                                    label="Заведование кабинетом"
                                                                     required
                                                             ></v-select>
                                                         </v-col>
                                                         <v-col
-                                                                cols="12"
                                                                 sm="6"
+                                                                md="6"
                                                         >
                                                             <v-autocomplete
                                                                     :items="['1-4 классы полный', '1-4 классы неполный', '5-11 классы полный', '5-11 классы неполный']"
-                                                                    label="За руководство"
+                                                                    label="Руководство классом"
                                                                     hint="Неполный класс до 14 включительно"
                                                             ></v-autocomplete>
                                                         </v-col>
                                                     </v-row>
                                                 </v-container>
-                                                <small>**Все поля являются необязательными</small>
                                             </v-card-text>
                                             <v-card-actions>
-                                                <v-spacer></v-spacer>
                                                 <v-btn
-                                                        color="blue darken-1"
-                                                        text
-                                                        @click="dialogEx.value = false"
-                                                >
-                                                    Закрыть
-                                                </v-btn>
-                                                <v-btn
-                                                        color="blue darken-1"
+                                                        block
                                                         text
                                                         @click="dialogEx.value = false"
                                                 >
@@ -450,41 +396,33 @@
                                                 <v-container>
                                                     <v-row>
                                                         <v-col
-                                                                cols="12"
                                                                 sm="6"
+                                                                md="6"
                                                         >
                                                             <v-select
                                                                     :items="['1 уровень', '2 уровень', '3 уровень']"
-                                                                    label="За уровень по программам НИШ"
+                                                                    label="Уровень по программам НИШ"
                                                                     required
                                                             ></v-select>
                                                         </v-col>
                                                         <v-col
-                                                                cols="12"
                                                                 sm="6"
+                                                                md="6"
                                                         >
                                                             <v-autocomplete
                                                                     :items="['Педагог-мастер', 'Педагог-исследователь', 'Педагог-эксперт', 'Педагог-модератор']"
-                                                                    label="За квалификационную категорию"
+                                                                    label="Квалификационная категория"
                                                                     hint="Неполный класс до 14 включительно"
                                                             ></v-autocomplete>
                                                         </v-col>
+
                                                     </v-row>
                                                 </v-container>
-                                                <small>**Все поля являются необязательными</small>
                                             </v-card-text>
                                             <v-card-actions>
-                                                <v-spacer></v-spacer>
                                                 <v-btn
-                                                        color="blue darken-1"
                                                         text
-                                                        @click="dialogEx.value = false"
-                                                >
-                                                    Закрыть
-                                                </v-btn>
-                                                <v-btn
-                                                        color="blue darken-1"
-                                                        text
+                                                        block
                                                         @click="dialogEx.value = false"
                                                 >
                                                     Расчитать
@@ -502,12 +440,12 @@
 <!--                        /Calculate buttons                   -->
 
 <!--        /Dialog window                 -->
+
                     </v-flex>
                 </v-layout>
             </v-container>
             </v-col>
                 <v-col
-                        cols="12"
                         sm="4">
                 </v-col>
             </v-row>
@@ -572,130 +510,169 @@
             </v-list>
         </v-navigation-drawer>
 
+        <slot v-if="isAbout">
+        <div id="about"></div>
+        </slot>
     </v-sheet>
     <!-- /Menu bar  -->
 
 
 </div>
 
+
+
 </body>
 
 
 
 
-<!--<script>-->
+<script>
 
 
-<!--    new Vue({-->
-<!--        el: '#app',-->
-<!--        name: 'main',-->
-<!--        vuetify: new Vuetify(),-->
+    new Vue({
+        el: '#about',
+        name: 'about',
+        vuetify: new Vuetify(),
+        template:
+        `
+        <v-form>
+                        <br>
 
-<!--        data () {-->
-<!--            return {-->
-<!--                drawer: false,-->
-<!--                items: [-->
-<!--                    { title: 'Главная страница', icon: 'mdi-view-dashboard', ref:'/' },-->
-<!--                    { title: 'Про приложение', icon: 'mdi-forum' , ref: '/about'},-->
-<!--                ],-->
-<!--                date: new Date().toISOString().substr(0, 7),-->
-<!--                menu: false,-->
-<!--                modal: false,-->
-<!--                checkbox: false,-->
-<!--                category: '',-->
-<!--                education: '',-->
-<!--                title: '',-->
-<!--                result: '',-->
-<!--                experience: '',-->
-<!--                loads: '',-->
-<!--                valid: true,-->
-<!--                salary: '',-->
-<!--                dialog: false,-->
-<!--                dialogTwo: false,-->
-<!--                isAbout: false,-->
-<!--                addPay: false,-->
-<!--                titles: [-->
-<!--                    'Учитель',-->
-<!--                ],-->
-<!--                educations: [-->
-<!--                    'Высшее',-->
-<!--                    'Среднее специальное'-->
-<!--                ],-->
-<!--                categories: [-->
-<!--                    'Без категории',-->
-<!--                    '2 категория',-->
-<!--                    '1 категория',-->
-<!--                    'Высшая категория'-->
-<!--                ],-->
-<!--                fsRule: [-->
-<!--                    v => v === '' ? 'Это обязательное поле' : false-->
-<!--                ],-->
-<!--                sRule: [-->
-<!--                    v => v === '' ? 'Это обязательное поле' : false-->
-<!--                ],-->
-<!--                tRule: [-->
-<!--                    v => v === '' ? 'Это обязательное поле' : false-->
-<!--                ],-->
-<!--                fRule: [-->
-<!--                    v => v === '' ? 'Это обязательное поле' : false-->
-<!--                ],-->
-<!--                ffRule: [-->
-<!--                    v => v === '' ? 'Это обязательное поле' : false-->
-<!--                ],-->
+                        <v-hover
+                                v-slot="{ hover }"
+                                disabled
+                               >
+                            <v-card
+                                    :elevation="hover ? 12 : 2"
+                                    class="mx-auto"
+                                    height="350"
+                                    max-width="350"
+                            style=" margin: 0 auto;">
+                                <v-card-text class="my-4 text-center text-h1" >
+                                    Служба технической поддержки
+                                    Вы можете обратиться по телефону 8-777-574-25-40
+                                    Или написать нам на адрес suleevn@gmail.com
+                                </v-card-text>
+                            </v-card>
+                        </v-hover>
 
-<!--            }-->
-<!--        },-->
 
-<!--        mounted () {-->
-<!--            this.getSalary()-->
-<!--            setInterval(this.getSalary, 2000);-->
-<!--        },-->
 
-<!--        methods: {-->
-<!--            validation() {-->
-<!--                this.$refs.form.validate();-->
-<!--             if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){-->
-<!--                this.calculate();-->
-<!--                this.dialog = true;-->
-<!--             }-->
-<!--            },-->
+        </v-form>
+        `
+    })
 
-<!--            logout() {-->
-<!--                console.log("logging out")-->
-<!--            },-->
-<!--            login() {-->
-<!--                console.log("logging in")-->
-<!--            },-->
-<!--            getSalary(){-->
-<!--                axios.get("http://localhost:8080/salary")-->
-<!--                    .then(response => this.salary = response.data)-->
-<!--                    .catch(error => { console.error("There was an error!", error.message); });-->
-<!--            },-->
-<!--            calculate() {-->
-<!--                setTimeout(this.getSalary,1000);-->
-<!--                // POST request using axios with error handling-->
-<!--                const itemsToCalculate = {-->
-<!--                    category: this.category,-->
-<!--                    title: this.title,-->
-<!--                    education: this.education,-->
-<!--                    experience: this.experience,-->
-<!--                    date: this.date,-->
-<!--                    loads: this.loads,-->
-<!--                    checkbox: this.checkbox-->
-<!--                };-->
 
-<!--                axios.post("http://localhost:8080/calculate", itemsToCalculate)-->
-<!--                    .then(response =>  this.result = response.data)-->
-<!--                    .catch(error => { console.error("There was an error!", error.message); });-->
+    new Vue({
+        el: '#deamon',
+        name: 'calculator',
+        vuetify: new Vuetify(),
 
-<!--                console.log(this.result);-->
+        data () {
+            return {
+                drawer: false,
+                items: [
+                    { title: 'Главная страница', icon: 'mdi-view-dashboard', ref:'/' },
+                    { title: 'Про приложение', icon: 'mdi-forum' , ref: '/about'},
+                ],
+                date: new Date().toISOString().substr(0, 7),
+                menu: false,
+                modal: false,
+                checkbox: false,
+                category: '',
+                education: '',
+                title: '',
+                result: '',
+                experience: '',
+                loads: '',
+                valid: true,
+                salary: '',
+                dialog: false,
+                dialogTwo: false,
+                isAbout: false,
+                addPay: false,
+                titles: [
+                    'Учитель',
+                ],
+                educations: [
+                    'Высшее',
+                    'Среднее специальное'
+                ],
+                categories: [
+                    'Без категории',
+                    '2 категория',
+                    '1 категория',
+                    'Высшая категория'
+                ],
+                fsRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                sRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                tRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                fRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
+                ffRule: [
+                    v => v === '' ? 'Это обязательное поле' : false
+                ],
 
-<!--            }-->
+            }
+        },
 
-<!--        },-->
+        mounted () {
+            this.getSalary()
+            setInterval(this.getSalary, 2000);
+        },
 
-<!--    })-->
+        methods: {
+            validation() {
+                this.$refs.form.validate();
+             if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){
+                this.calculate();
+                this.dialog = true;
+             }
+            },
 
-<!--</script>-->
+            logout() {
+                console.log("logging out")
+            },
+            login() {
+                console.log("logging in")
+            },
+            getSalary(){
+                axios.get("http://localhost:8080/salary")
+                    .then(response => this.salary = response.data)
+                    .catch(error => { console.error("There was an error!", error.message); });
+            },
+            calculate() {
+                setTimeout(this.getSalary,1000);
+                // POST request using axios with error handling
+                const itemsToCalculate = {
+                    category: this.category,
+                    title: this.title,
+                    education: this.education,
+                    experience: this.experience,
+                    date: this.date,
+                    loads: this.loads,
+                    checkbox: this.checkbox
+                };
+
+                axios.post("http://localhost:8080/calculate", itemsToCalculate)
+                    .then(response =>  this.result = response.data)
+                    .catch(error => { console.error("There was an error!", error.message); });
+
+                console.log(this.result);
+
+            }
+
+        },
+
+    })
+
+</script>
 
 </html>
