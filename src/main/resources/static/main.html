@@ -117,9 +117,6 @@
                                 solo
                                 :rules="fRule"
                         ></v-text-field>
-
-
-
                     </v-col>
                     <v-col
                             sm="4">
@@ -318,7 +315,9 @@
                                                             <v-text-field
                                                                     label="Часы обновленного содержания"
                                                                     th:type="number"
+                                                                    v-model="updateHour"
                                                                     required
+
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
@@ -327,6 +326,7 @@
                                                         >
                                                             <v-text-field
                                                                     label="Часы обучения на дому"
+                                                                    v-model="homeHour"
                                                                     th:type="number"
                                                             ></v-text-field>
                                                         </v-col>
@@ -337,6 +337,7 @@
                                                             <v-text-field
                                                                     label="Часы работы с лицейскими и гимназическими классами"
                                                                     th:type="number"
+                                                                    v-model="gymHour"
                                                                     persistent-hint
                                                                     required
                                                             ></v-text-field>
@@ -347,6 +348,7 @@
                                                             <v-text-field
                                                                     label="Часы углубленного изучения"
                                                                     th:type="number"
+                                                                    v-model="deepHour"
                                                                     required
                                                             ></v-text-field>
                                                         </v-col>
@@ -357,6 +359,7 @@
                                                             <v-select
                                                                     :items="['Весь день', 'Пол дня', 'Мастерской весь день', 'Мастерской пол дня']"
                                                                     label="Заведование кабинетом"
+                                                                    v-model="roomLook"
                                                                     required
                                                             ></v-select>
                                                         </v-col>
@@ -364,21 +367,44 @@
                                                                 sm="6"
                                                                 md="6"
                                                         >
-                                                            <v-autocomplete
+                                                            <v-select
                                                                     :items="['1-4 классы полный', '1-4 классы неполный', '5-11 классы полный', '5-11 классы неполный']"
                                                                     label="Руководство классом"
+                                                                    v-model="classMentor"
                                                                     hint="Неполный класс до 14 включительно"
-                                                            ></v-autocomplete>
+                                                            ></v-select>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="6"
+                                                                md="6">
+                                                            <v-text-field
+                                                                    label="Часы по предметам профильного назначения"
+                                                                    th:type="number"
+                                                                    v-model="profHour"
+                                                                    required
+                                                            ></v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="6"
+                                                                md="6">
+                                                            <v-text-field
+                                                                    label="Часы проверки тетрадей и письменных работ"
+                                                                    th:type="number"
+                                                                    v-model="noteHour"
+                                                                    required
+                                                            ></v-text-field>
                                                         </v-col>
                                                         <v-col
                                                                 sm="12"
                                                                 md="12">
-                                                            <v-text-field
-                                                                    label="Часы по предметам профильного назначения*"
-                                                                    th:type="number"
-                                                                    required
-                                                            ></v-text-field>
+                                                            <v-select
+                                                                    :items="['Учитель ЕМН', 'Учитель 1-4 классов', 'Учителя языка и литературы']"
+                                                                    label="Руководство классом"
+                                                                    v-model="noteType"
+                                                                    hint="Поле нужно для расчета проверок тетрадей"
+                                                            ></v-select>
                                                         </v-col>
+                                                        <small>**Заполните поле руководство классом для корректного подсчета часов проверки тетрадей</small>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -402,6 +428,7 @@
                                                     <v-icon>mdi-close</v-icon>
                                                 </v-btn>
                                             </v-card-actions>
+
                                         </v-tab-item>
                                         <v-tab-item>
                                             <v-card-title>
@@ -417,6 +444,7 @@
                                                             <v-select
                                                                     :items="['1 уровень', '2 уровень', '3 уровень']"
                                                                     label="Уровень по программам НИШ"
+                                                                    v-model="nisProgram"
                                                                     required
                                                             ></v-select>
                                                         </v-col>
@@ -424,29 +452,31 @@
                                                                 sm="6"
                                                                 md="6"
                                                         >
-                                                            <v-autocomplete
+                                                            <v-select
                                                                     :items="['Педагог-мастер', 'Педагог-исследователь', 'Педагог-эксперт', 'Педагог-модератор']"
                                                                     label="Квалификационная категория"
-                                                                    hint="Неполный класс до 14 включительно"
-                                                            ></v-autocomplete>
+                                                                    v-model="qualityCategory"
+                                                            ></v-select>
                                                         </v-col>
                                                         <v-col
                                                                 sm="12"
                                                                 md="12"
                                                         >
-                                                            <v-autocomplete
+                                                            <v-select
                                                                     :items="['Экологической катастрофы', 'Экологического кризиса', 'Экологического пред кризисного состояния']"
                                                                     label="Работа в зоне экологического бедствия"
-                                                            ></v-autocomplete>
+                                                                    v-model="ecoZone"
+                                                            ></v-select>
                                                         </v-col>
                                                         <v-col
                                                                 sm="12"
                                                                 md="12"
                                                         >
-                                                            <v-autocomplete
+                                                            <v-select
                                                                     :items="['Чрезвычайный риск', 'Максимальный кризиса', 'Повышенный', 'Минимальный', 'С льготным социально экономическим статусом']"
                                                                     label="Работа в зонах радиационного риска"
-                                                            ></v-autocomplete>
+                                                                    v-model="radZone"
+                                                            ></v-select>
                                                         </v-col>
                                                         <v-col
                                                                 sm="6"
@@ -648,12 +678,12 @@
                 date: new Date().toISOString().substr(0, 7),
                 menu: false,
                 modal: false,
-                masters: '',
+                masters: false,
                 checkbox: false,
                 category: '',
                 education: '',
-                inEnglish: '',
-                mentoring: '',
+                inEnglish: false,
+                mentoring: false,
                 title: '',
                 result: '',
                 experience: '',
@@ -664,6 +694,19 @@
                 dialogTwo: false,
                 isAbout: false,
                 addPay: false,
+                updateHour: '',
+                homeHour: '',
+                gymHour: '',
+                deepHour: '',
+                roomLook: '',
+                classMentor: '',
+                profHour: '',
+                noteHour: '',
+                noteType: '',
+                nisProgram: '',
+                qualityCategory: '',
+                ecoZone: '',
+                radZone: '',
                 titles: [
                     'Учитель',
                 ],
