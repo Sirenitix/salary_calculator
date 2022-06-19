@@ -16,14 +16,18 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<style>
+    [v-cloak] {
+        display:none;
+    }
+</style>
 <body >
 
 <div id="deamon" data-app style="font-family: sans-serif" >
 
 <!--   NAVBAR    -->
 
-        <v-toolbar
+        <v-toolbar v-cloak
                 dark
                 prominent
                 src="http://yesofcorsa.com/wp-content/uploads/2017/01/4K-Lights-Best-Wallpaper-1.jpg"
@@ -45,7 +49,7 @@
         </v-toolbar>
 
     <!--   /NAVBAR    -->
-    <v-sheet
+    <v-sheet  v-cloak
             height=852
             class="overflow-hidden"
             style="position: relative;"
@@ -60,7 +64,7 @@
 <!--              Additional section              -->
 
 
-        <v-form v-if="!isAbout" ref="form">
+        <v-form v-cloak v-if="!isAbout" ref="form">
             <v-container>
                 <v-row>
                     <v-col
@@ -347,15 +351,6 @@
                                                             ></v-text-field>
                                                         </v-col>
                                                         <v-col
-                                                               sm="6"
-                                                               md="6">
-                                                            <v-text-field
-                                                                    label="Часы по предметам профильного назначения*"
-                                                                    th:type="number"
-                                                                    required
-                                                            ></v-text-field>
-                                                        </v-col>
-                                                        <v-col
                                                                 sm="6"
                                                                 md="6"
                                                         >
@@ -375,6 +370,15 @@
                                                                     hint="Неполный класс до 14 включительно"
                                                             ></v-autocomplete>
                                                         </v-col>
+                                                        <v-col
+                                                                sm="12"
+                                                                md="12">
+                                                            <v-text-field
+                                                                    label="Часы по предметам профильного назначения*"
+                                                                    th:type="number"
+                                                                    required
+                                                            ></v-text-field>
+                                                        </v-col>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -386,6 +390,16 @@
                                                         @click="dialogEx.value = false"
                                                 >
                                                     Расчитать
+                                                </v-btn>
+                                            </v-card-actions>
+                                            <v-card-actions>
+                                                <v-btn
+                                                        block
+                                                        outlined
+                                                        text
+                                                        @click="dialogEx.value = false"
+                                                >
+                                                    <v-icon>mdi-close</v-icon>
                                                 </v-btn>
                                             </v-card-actions>
                                         </v-tab-item>
@@ -416,7 +430,51 @@
                                                                     hint="Неполный класс до 14 включительно"
                                                             ></v-autocomplete>
                                                         </v-col>
-
+                                                        <v-col
+                                                                sm="12"
+                                                                md="12"
+                                                        >
+                                                            <v-autocomplete
+                                                                    :items="['Экологической катастрофы', 'Экологического кризиса', 'Экологического пред кризисного состояния']"
+                                                                    label="Работа в зоне экологического бедствия"
+                                                            ></v-autocomplete>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="12"
+                                                                md="12"
+                                                        >
+                                                            <v-autocomplete
+                                                                    :items="['Чрезвычайный риск', 'Максимальный кризиса', 'Повышенный', 'Минимальный', 'С льготным социально экономическим статусом']"
+                                                                    label="Работа в зонах радиационного риска"
+                                                            ></v-autocomplete>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="6"
+                                                                md="6"
+                                                        >
+                                                        <v-checkbox
+                                                                v-model="masters" dense
+                                                                :label="`Степень магистра`"
+                                                        ></v-checkbox>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="6"
+                                                                md="6"
+                                                        >
+                                                            <v-checkbox
+                                                                    v-model="mentoring" dense
+                                                                    :label="`Наставничество`"
+                                                            ></v-checkbox>
+                                                        </v-col>
+                                                        <v-col
+                                                                sm="12"
+                                                                md="12"
+                                                        >
+                                                            <v-checkbox
+                                                                    v-model="inEnglish" dense
+                                                                    :label="`Преподавание на английском языке`"
+                                                            ></v-checkbox>
+                                                        </v-col>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -430,7 +488,16 @@
                                                     Расчитать
                                                 </v-btn>
                                             </v-card-actions>
-
+                                            <v-card-actions>
+                                                <v-btn
+                                                        block
+                                                        outlined
+                                                        text
+                                                        @click="dialogEx.value = false"
+                                                >
+                                                    <v-icon>mdi-close</v-icon>
+                                                </v-btn>
+                                            </v-card-actions>
                                         </v-tab-item>
                                     </v-tabs>
 
@@ -463,6 +530,7 @@
                 v-if="drawer"
                 absolute
                 temporary
+                v-cloak
         >
 
             <v-list-item>
@@ -529,7 +597,7 @@
 
 
 <script>
-
+    window.addEventListener("load", function() {
 
     new Vue({
         el: '#about',
@@ -580,9 +648,12 @@
                 date: new Date().toISOString().substr(0, 7),
                 menu: false,
                 modal: false,
+                masters: '',
                 checkbox: false,
                 category: '',
                 education: '',
+                inEnglish: '',
+                mentoring: '',
                 title: '',
                 result: '',
                 experience: '',
@@ -674,7 +745,10 @@
         },
 
     })
+    })
 
 </script>
+
+
 
 </html>
