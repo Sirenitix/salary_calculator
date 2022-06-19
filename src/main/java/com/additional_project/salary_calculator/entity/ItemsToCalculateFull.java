@@ -21,5 +21,4 @@ public class ItemsToCalculateFull extends ItemsToCalculate {
     private int inEnglish;
     private int mentoring;
     private int masters;
-
 }

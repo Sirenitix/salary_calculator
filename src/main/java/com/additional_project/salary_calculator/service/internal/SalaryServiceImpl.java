@@ -1,6 +1,7 @@
 package com.additional_project.salary_calculator.service.internal;
 
 import com.additional_project.salary_calculator.entity.ItemsToCalculate;
+import com.additional_project.salary_calculator.entity.ItemsToCalculateFull;
 import com.additional_project.salary_calculator.entity.Ratio;
 import com.additional_project.salary_calculator.repository.CustomUserRepository;
 import com.additional_project.salary_calculator.repository.UserRepository;
@@ -346,6 +347,12 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public double getSalary() {
        return userRepository.findByLogin(getLogin()).getSalary();
+    }
+
+    @Override
+    public double calculationWithAdditionalParameters(ItemsToCalculateFull itemsToCalculateFull) {
+        double resultWithoutAddParam = calculate(itemsToCalculateFull);
+        return 0;
     }
 
 }
