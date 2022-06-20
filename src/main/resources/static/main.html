@@ -181,11 +181,9 @@
             </v-container>
 
             <v-row>
-                <v-col
-                        sm="4">
+                <v-col sm="4">
                 </v-col>
-            <v-col
-                    sm="4">
+            <v-col sm="4">
 
             <v-container bg grid-list-md text-center>
                 <v-layout row wrap align-center>
@@ -194,6 +192,12 @@
                                 v-model="checkbox" dense
                                 :label="`Работа в сельской местности`"
                         ></v-checkbox>
+                    </v-flex>
+                    <v-flex>
+                    <v-checkbox
+                            v-model="special" dense
+                            :label="`Доплата за особые условия труда`"
+                    ></v-checkbox>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -223,7 +227,7 @@
                                         large
                                         inline
                                         block
-                                        @click="validation();"
+                                        @click="validationWithCalculation();"
                                 >Расчитать</v-btn>
                             </template>
 <!--                      Calculate buttons                   -->
@@ -259,6 +263,7 @@
                         <v-dialog
                                 persistent
                                 max-width="600px"
+                                v-model="dialogEx"
                         >
                             <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -271,8 +276,7 @@
                                 large
                                 inline
                                 block
-                                v-bind="attrs"
-                                v-on="on"
+                                @click="validation()"
                         >
                             Расчитать с доплатой
                         </v-btn>
@@ -413,7 +417,7 @@
                                                         block
                                                         outlined
                                                         text
-                                                        @click="dialogEx.value = false"
+                                                        @click="calculateWithAdditionalParam();"
                                                 >
                                                     Расчитать
                                                 </v-btn>
@@ -479,6 +483,16 @@
                                                             ></v-select>
                                                         </v-col>
                                                         <v-col
+                                                                sm="12"
+                                                                md="12"
+                                                        >
+                                                            <v-select
+                                                                    :items="['Полное погружение', 'Частичное погружение']"
+                                                                    label="Преподавание на английском языке"
+                                                                    v-model="inEnglish"
+                                                            ></v-select>
+                                                        </v-col>
+                                                        <v-col
                                                                 sm="6"
                                                                 md="6"
                                                         >
@@ -496,15 +510,6 @@
                                                                     :label="`Наставничество`"
                                                             ></v-checkbox>
                                                         </v-col>
-                                                        <v-col
-                                                                sm="12"
-                                                                md="12"
-                                                        >
-                                                            <v-checkbox
-                                                                    v-model="inEnglish" dense
-                                                                    :label="`Преподавание на английском языке`"
-                                                            ></v-checkbox>
-                                                        </v-col>
                                                     </v-row>
                                                 </v-container>
                                             </v-card-text>
@@ -513,7 +518,7 @@
                                                         text
                                                         outlined
                                                         block
-                                                        @click="dialogEx.value = false"
+                                                        @click="calculateWithAdditionalParam();"
                                                 >
                                                     Расчитать
                                                 </v-btn>
@@ -682,7 +687,7 @@
                 checkbox: false,
                 category: '',
                 education: '',
-                inEnglish: false,
+                inEnglish: '',
                 mentoring: false,
                 title: '',
                 result: '',
@@ -691,9 +696,11 @@
                 valid: true,
                 salary: '',
                 dialog: false,
+                dialogEx: false,
                 dialogTwo: false,
                 isAbout: false,
                 addPay: false,
+                special: true,
                 updateHour: '',
                 homeHour: '',
                 gymHour: '',
@@ -745,13 +752,20 @@
         },
 
         methods: {
-            validation() {
+            validationWithCalculation() {
                 this.$refs.form.validate();
              if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ){
                 this.calculate();
                 this.dialog = true;
              }
             },
+            validation(){
+                this.$refs.form.validate();
+                if(this.title.trim() !== '' && this.category.trim() !== '' &&  this.experience.trim() !== '' && this.loads.trim() !== '' && this.education.trim() !== '' ) {
+                    this.dialogEx = true;
+
+                }
+                },
 
             logout() {
                 console.log("logging out")
@@ -768,6 +782,7 @@
                 setTimeout(this.getSalary,1000);
                 // POST request using axios with error handling
                 const itemsToCalculate = {
+                    special: this.special,
                     category: this.category,
                     title: this.title,
                     education: this.education,
@@ -781,6 +796,45 @@
                     .then(response =>  this.result = response.data)
                     .catch(error => { console.error("There was an error!", error.message); });
 
+                console.log(this.result);
+
+            },
+
+            calculateWithAdditionalParam() {
+                this.$refs.form.validate();
+                setTimeout(this.getSalary,1000);
+                // POST request using axios with error handling
+                const ItemsToCalculateFull = {
+                    category: this.category,
+                    special: this.special,
+                    title: this.title,
+                    education: this.education,
+                    experience: this.experience,
+                    date: this.date,
+                    loads: this.loads,
+                    checkbox: this.checkbox,
+                    updateHour: this.updateHour,
+                    homeHour: this.homeHour,
+                    gymHour: this.gymHour,
+                    deepHour: this.deepHour,
+                    roomLook: this.roomLook,
+                    classMentor: this.classMentor,
+                    profHour: this.profHour,
+                    noteHour: this.noteHour,
+                    noteType: this.noteType,
+                    nisProgram: this.nisProgram,
+                    qualityCategory: this.qualityCategory,
+                    ecoZone: this.ecoZone,
+                    radZone: this.radZone,
+                    inEnglish: this.inEnglish,
+                    mentoring: this.mentoring,
+                    masters: this.masters
+                };
+
+                axios.post("http://localhost:8080/additional", ItemsToCalculateFull)
+                    .then(response =>  this.result = response.data)
+                    .catch(error => { console.error("There was an error!", error.message); });
+                this.dialog = true;
                 console.log(this.result);
 
             }

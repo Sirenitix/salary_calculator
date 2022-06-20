@@ -12,6 +12,7 @@ public class ItemsToCalculate {
     private Integer experience;
     private String date;
     private Integer loads;
-    private String checkbox;
+    private Boolean checkbox;
+    private Boolean special;
 
 }

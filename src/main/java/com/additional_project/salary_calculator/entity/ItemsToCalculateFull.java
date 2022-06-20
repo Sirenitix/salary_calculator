@@ -5,20 +5,20 @@ import lombok.*;
 @Data
 @ToString
 public class ItemsToCalculateFull extends ItemsToCalculate {
-    private int updateHour;
-    private int homeHour;
-    private int gymHour;
-    private int deepHour;
-    private int roomLook;
-    private int classMentor;
-    private int profHour;
-    private int noteHour;
-    private int noteType;
-    private int nisProgram;
-    private int qualityCategory;
-    private int ecoZone;
-    private int radZone;
-    private int inEnglish;
-    private int mentoring;
-    private int masters;
+    private Integer updateHour;
+    private Integer homeHour;
+    private Integer gymHour;
+    private Integer deepHour;
+    private String roomLook;
+    private String classMentor;
+    private Integer profHour;
+    private Integer noteHour;
+    private String noteType;
+    private String nisProgram;
+    private String qualityCategory;
+    private String ecoZone;
+    private String radZone;
+    private String inEnglish;
+    private boolean mentoring;
+    private boolean masters;
 }
