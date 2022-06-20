@@ -49,6 +49,8 @@ public class SalaryServiceImpl implements SalaryService {
         double specialPay = 0;
         double primal = 0;
 
+        double cef = yearPercentage.get(Integer.parseInt(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)));
+        log.info("cef - " + cef);
 
         if(itemsToCalculate.getExperience() > 25){
             itemsToCalculate.setExperience(26);
@@ -62,19 +64,19 @@ public class SalaryServiceImpl implements SalaryService {
 
 
         if(itemsToCalculate.getCheckbox()){
-            primal = (((bdo * rate * 1.75) * 0.25));
+            primal = (((bdo * rate * cef) * 0.25));
         }
 
         if(itemsToCalculate.getSpecial()){
-            specialPay  = (((bdo * rate * 1.75) + primal ) * 0.1);
+            specialPay  = (((bdo * rate * cef) + primal ) * 0.1);
         }
 
 
-        salary = ((((bdo * rate * 1.75) + primal )*itemsToCalculate.getLoads())/16) + specialPay;
+        salary = ((((bdo * rate * cef) + primal )*itemsToCalculate.getLoads())/16) + specialPay;
 
 
         log.info(bdo + " - БДО");
-        log.info((bdo * rate * 1.75) + primal + " - ДО");
+        log.info((bdo * rate * cef) + primal + " - ДО");
         log.info(rate + " - Koэффицент");
         log.info(salary + " - ЗП");
         log.info(mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25 + " - 25 мрп");
@@ -108,11 +110,12 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public double calculationWithAdditionalParameters(ItemsToCalculateFull itemsToCalculateFull) {
         double primal = 0;
+        double cef = yearPercentage.get(Integer.parseInt(itemsToCalculateFull.getDate().substring(0,itemsToCalculateFull.getDate().length()-3)));
         Double rate = educationLevelMap.get(itemsToCalculateFull.getEducation()).get(new Ratio(itemsToCalculateFull.getExperience(), categoryMap.get(itemsToCalculateFull.getCategory())));
         if(itemsToCalculateFull.getCheckbox()){
-            primal = (((bdo * rate * 1.75) * 0.25));
+            primal = (((bdo * rate * cef) * 0.25));
         }
-        Double doOkl = bdo * rate * 1.75 + primal;
+        Double doOkl = bdo * rate * cef + primal;
         double localMrp = mrp.get(itemsToCalculateFull.getDate().substring(0,itemsToCalculateFull.getDate().length()-3));
 
         double result = calculate(itemsToCalculateFull);

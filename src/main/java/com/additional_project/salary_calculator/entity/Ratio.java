@@ -44,6 +44,8 @@ public class Ratio {
 
     public static Map<String, Double> noteTypes;
 
+    public static Map<Integer, Double> yearPercentage;
+
     static {
 
 
@@ -55,7 +57,8 @@ public class Ratio {
 
 
         mrp = new HashMap<>();
-        mrp.put("2022", 3063);
+        mrp.put("2023", 3201);
+        mrp.put("2022", 3180);
         mrp.put("2021", 2917);
         mrp.put("2020", 2778);
         mrp.put("2019", 2525);
@@ -367,6 +370,12 @@ public class Ratio {
         noteTypes.put("Учителя языка и литературы", (bdo / 16) * 0.5);
 
 
+        yearPercentage = new HashMap<>();
+        yearPercentage.put(2023, 2.0);
+        yearPercentage.put(2022, 1.75);
+        yearPercentage.put(2021, 1.5);
+        yearPercentage.put(2020, 1.25);
+        yearPercentage.put(2019, 1.0);
     }
 
 }
