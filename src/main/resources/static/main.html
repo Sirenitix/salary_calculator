@@ -492,6 +492,19 @@
                                                                     v-model="inEnglish"
                                                             ></v-select>
                                                         </v-col>
+<!--                    New select box                             -->
+                                                        <v-col
+                                                                sm="12"
+                                                                md="12"
+                                                        >
+                                                            <v-select
+                                                                    :items="['1-4 классы полный', '1-4 классы неполный', '5-11 классы полный', '5-11 классы неполный']"
+                                                                    label="Замена классного руководства"
+                                                                    v-model="teacherReplacement"
+                                                            ></v-select>
+                                                        </v-col>
+<!--                    /New select box                             -->
+
                                                         <v-col
                                                                 sm="6"
                                                                 md="6"
@@ -687,6 +700,7 @@
                 checkbox: false,
                 category: '',
                 education: '',
+                teacherReplacement: '',
                 inEnglish: '',
                 mentoring: false,
                 title: '',
@@ -828,7 +842,8 @@
                     radZone: this.radZone,
                     inEnglish: this.inEnglish,
                     mentoring: this.mentoring,
-                    masters: this.masters
+                    masters: this.masters,
+                    teacherReplacement: this.teacherReplacement
                 };
 
                 axios.post("http://localhost:8080/additional", ItemsToCalculateFull)

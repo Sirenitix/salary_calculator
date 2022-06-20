@@ -46,6 +46,8 @@ public class Ratio {
 
     public static Map<Integer, Double> yearPercentage;
 
+    public static Map<String, Double> teacherRepRate;
+
     static {
 
 
@@ -376,6 +378,12 @@ public class Ratio {
         yearPercentage.put(2021, 1.5);
         yearPercentage.put(2020, 1.25);
         yearPercentage.put(2019, 1.0);
+
+        teacherRepRate = new HashMap<>();
+        teacherRepRate.put("1-4 классы полный", (bdo * 0.5) / 26);
+        teacherRepRate.put("1-4 классы неполный", ((bdo * 0.5) / 26) / 2);
+        teacherRepRate.put("5-11 классы полный", (bdo * 0.6) / 26);
+        teacherRepRate.put("5-11 классы неполный", ((bdo * 0.5) / 26) / 2);
     }
 
 }

@@ -21,4 +21,5 @@ public class ItemsToCalculateFull extends ItemsToCalculate {
     private String inEnglish;
     private boolean mentoring;
     private boolean masters;
+    private String teacherReplacement;
 }

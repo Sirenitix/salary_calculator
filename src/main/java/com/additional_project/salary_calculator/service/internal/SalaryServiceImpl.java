@@ -182,6 +182,10 @@ public class SalaryServiceImpl implements SalaryService {
             }
         }
 
+        if(teacherRepRate.containsKey(itemsToCalculateFull.getTeacherReplacement())){
+            result = result + teacherRepRate.get(itemsToCalculateFull.getTeacherReplacement());
+        }
+
 
         return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
     }
