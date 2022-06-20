@@ -40,11 +40,15 @@ public class SalaryServiceImpl implements SalaryService {
         return login;
     }
 
+
+
     @Override
     public double calculate(ItemsToCalculate itemsToCalculate) {
 
         double salary;
-        double result;
+        double specialPay = 0;
+        double primal = 0;
+
 
         if(itemsToCalculate.getExperience() > 25){
             itemsToCalculate.setExperience(26);
@@ -55,25 +59,27 @@ public class SalaryServiceImpl implements SalaryService {
         }
 
         Double rate = educationLevelMap.get(itemsToCalculate.getEducation()).get(new Ratio(itemsToCalculate.getExperience(), categoryMap.get(itemsToCalculate.getCategory())));
-        salary = ((bdo * rate * 1.75)*itemsToCalculate.getLoads())/16;
 
-        if(salary < mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25){
-            result = salary - (((salary * 0.1) - (salary * 0.02) - (mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 14)) * 0.01);
-        }   else {
-            result = salary - (((salary * 0.1) - (salary * 0.02) - (mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 14)) * 0.1);
-        }
 
         if(itemsToCalculate.getCheckbox()){
-            result *= 1.25;
+            primal = (((bdo * rate * 1.75) * 0.25));
         }
 
         if(itemsToCalculate.getSpecial()){
-            result = result + (((bdo * rate * 1.75) * itemsToCalculate.getLoads()) * 0.1);
+            specialPay  = (((bdo * rate * 1.75) + primal ) * 0.1);
         }
 
-        System.out.println((Math.round(result * 100.0) / 100.0));
-        customUserRepository.updateUserSalary(getLogin(), (Math.round(result * 100.0) / 100.0));
-        return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
+
+        salary = ((((bdo * rate * 1.75) + primal )*itemsToCalculate.getLoads())/16) + specialPay;
+
+
+        log.info(bdo + " - БДО");
+        log.info((bdo * rate * 1.75) + primal + " - ДО");
+        log.info(rate + " - Koэффицент");
+        log.info(salary + " - ЗП");
+        log.info(mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25 + " - 25 мрп");
+        customUserRepository.updateUserSalary(getLogin(), (Math.round(salary * 100.0) / 100.0));
+        return (Math.round(salary * 100.0) / 100.0) == 0 ? 0 : (Math.round(salary * 100.0) / 100.0);
     }
 
     @Override
@@ -82,13 +88,35 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public double calculationWithAdditionalParameters(ItemsToCalculateFull itemsToCalculateFull) {
+    public double minusTax(double salary, ItemsToCalculate itemsToCalculate) {
+        double osms = salary * 0.02;
+        double opv = salary * 0.1;
+        double ipn = 0;
 
+        if(salary < mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25){
+            ipn = ((salary - opv - osms - (mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 14)) * 0.01);
+            log.info(ipn + " - ipn1111");
+        }   else {
+            ipn = ((salary - opv - osms - (mrp.get(itemsToCalculate.getDate().substring(0, itemsToCalculate.getDate().length() - 3)) * 14)) * 0.1);
+            log.info(mrp.get(itemsToCalculate.getDate().substring(0, itemsToCalculate.getDate().length() - 3)) * 14 + " - 14 mrp");
+            log.info(ipn + " - ipn2222");
+        }
+        double result = salary - osms - opv - ipn;
+        return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
+    }
+
+    @Override
+    public double calculationWithAdditionalParameters(ItemsToCalculateFull itemsToCalculateFull) {
+        double primal = 0;
         Double rate = educationLevelMap.get(itemsToCalculateFull.getEducation()).get(new Ratio(itemsToCalculateFull.getExperience(), categoryMap.get(itemsToCalculateFull.getCategory())));
-        Double doOkl = (bdo * rate * 1.75) * itemsToCalculateFull.getLoads();
+        if(itemsToCalculateFull.getCheckbox()){
+            primal = (((bdo * rate * 1.75) * 0.25));
+        }
+        Double doOkl = bdo * rate * 1.75 + primal;
         double localMrp = mrp.get(itemsToCalculateFull.getDate().substring(0,itemsToCalculateFull.getDate().length()-3));
 
         double result = calculate(itemsToCalculateFull);
+
         if(itemsToCalculateFull.isMentoring()){
             result = bdo + result;
         }
@@ -152,7 +180,7 @@ public class SalaryServiceImpl implements SalaryService {
         }
 
 
-        return result;
+        return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
     }
 
 }

@@ -8,5 +8,7 @@ import org.springframework.stereotype.Service;
 public interface SalaryService {
     double calculate(ItemsToCalculate itemsToCalculate);
     double getSalary();
+
+    double minusTax(double salary, ItemsToCalculate itemsToCalculate);
     double calculationWithAdditionalParameters(ItemsToCalculateFull itemsToCalculateFull);
 }

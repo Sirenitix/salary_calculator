@@ -55,7 +55,7 @@ public class Ratio {
 
 
         mrp = new HashMap<>();
-        mrp.put("2022", 3180);
+        mrp.put("2022", 3063);
         mrp.put("2021", 2917);
         mrp.put("2020", 2778);
         mrp.put("2019", 2525);

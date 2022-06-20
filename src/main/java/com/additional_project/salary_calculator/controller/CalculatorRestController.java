@@ -16,12 +16,12 @@ public class CalculatorRestController {
 
     @RequestMapping(value = "/calculate", method = RequestMethod.POST)
     public double calculate(@RequestBody ItemsToCalculate itemsToCalculate){
-        return salaryService.calculate(itemsToCalculate);
+        return salaryService.minusTax(salaryService.calculate(itemsToCalculate),itemsToCalculate);
     }
 
     @RequestMapping(value = "/additional", method = RequestMethod.POST)
     public double calculateFull(@RequestBody ItemsToCalculateFull itemsToCalculateFull){
-        return salaryService.calculationWithAdditionalParameters(itemsToCalculateFull);
+        return salaryService.minusTax(salaryService.calculationWithAdditionalParameters(itemsToCalculateFull),itemsToCalculateFull);
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
