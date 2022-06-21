@@ -2,10 +2,7 @@ package com.additional_project.salary_calculator.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -384,6 +381,8 @@ public class Ratio {
         teacherRepRate.put("1-4 классы неполный", ((bdo * 0.5) / 26) / 2);
         teacherRepRate.put("5-11 классы полный", (bdo * 0.6) / 26);
         teacherRepRate.put("5-11 классы неполный", ((bdo * 0.5) / 26) / 2);
+
+
     }
 
 }
