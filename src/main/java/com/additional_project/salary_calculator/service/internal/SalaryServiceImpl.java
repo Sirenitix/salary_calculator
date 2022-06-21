@@ -80,7 +80,6 @@ public class SalaryServiceImpl implements SalaryService {
         log.info(rate + " - Koэффицент");
         log.info(salary + " - ЗП");
         log.info(mrp.get(itemsToCalculate.getDate().substring(0,itemsToCalculate.getDate().length()-3)) * 25 + " - 25 мрп");
-        customUserRepository.updateUserSalary(getLogin(), (Math.round(salary * 100.0) / 100.0));
         return (Math.round(salary * 100.0) / 100.0) == 0 ? 0 : (Math.round(salary * 100.0) / 100.0);
     }
 
@@ -104,6 +103,7 @@ public class SalaryServiceImpl implements SalaryService {
             log.info(ipn + " - ipn2222");
         }
         double result = salary - osms - opv - ipn;
+        customUserRepository.updateUserSalary(getLogin(), (Math.round(result * 100.0) / 100.0));
         return (Math.round(result * 100.0) / 100.0) == 0 ? 0 : (Math.round(result * 100.0) / 100.0);
     }
 
